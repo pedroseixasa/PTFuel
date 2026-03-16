@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function cacheDomElements() {
-  ui.title = document.querySelector(".title");
+  ui.title = null; // removed from DOM
   ui.form = document.getElementById("form");
   ui.svg = document.getElementById("meuSVG");
   ui.mapWrapper = document.getElementById("tuga");
@@ -49,6 +49,7 @@ function cacheDomElements() {
   ui.priceSummary = document.getElementById("precoMedio");
   ui.sortBox = document.getElementById("boxx");
   ui.sortSelect = ui.sortBox ? ui.sortBox.querySelector("select") : null;
+  ui.closeBtn = document.getElementById("closePanelBtn");
 }
 
 function bindStaticEvents() {
@@ -56,6 +57,14 @@ function bindStaticEvents() {
   districtPaths.forEach((pathElement) => {
     pathElement.addEventListener("click", onDistrictClick);
   });
+
+  if (ui.closeBtn) {
+    ui.closeBtn.addEventListener("click", () => {
+      if (lastClickedElement) {
+        resetMapAndPanel(lastClickedElement);
+      }
+    });
+  }
 
   if (ui.sortSelect) {
     ui.sortSelect.addEventListener("change", (event) => {
@@ -565,14 +574,19 @@ function renderPosts(postsPage) {
         : "";
 
     card.innerHTML = `
-      <h3>${escapeHtml(post.name)}</h3>
-      <p><strong>Preco:</strong> ${formatPrice(post)}</p>
-      <p><strong>Combustivel:</strong> ${escapeHtml(post.fuel)}</p>
-      <p><strong>Marca:</strong> ${escapeHtml(post.brand)}</p>
-      <p><strong>Municipio:</strong> ${escapeHtml(post.municipio)}</p>
-      <p><strong>Morada:</strong> ${escapeHtml(post.address)}</p>
-      <p><strong>Atualizacao:</strong> ${escapeHtml(post.updatedAt || "N/A")}</p>
-      ${mapsUrl ? `<a href="${mapsUrl}" target="_blank" rel="noreferrer">Ver no mapa</a>` : ""}
+      <div class="posto-header">
+        <div>
+          <h3 class="posto-name">${escapeHtml(post.name)}</h3>
+          <span class="posto-fuel-tag">${escapeHtml(post.fuel)}</span>
+        </div>
+        <span class="posto-price">${formatPrice(post)}</span>
+      </div>
+      <div class="posto-meta">
+        <span>${escapeHtml(post.brand)} &middot; ${escapeHtml(post.municipio)}</span>
+        <span>${escapeHtml(post.address)}</span>
+        <span>Atualizado: ${escapeHtml(post.updatedAt || "N/A")}</span>
+        ${mapsUrl ? `<a href="${mapsUrl}" target="_blank" rel="noreferrer">Ver no mapa \u2192</a>` : ""}
+      </div>
     `;
 
     fragment.appendChild(card);
@@ -626,7 +640,7 @@ function renderSummary() {
   ui.priceSummary.innerHTML = "";
 
   if (!state.filteredPosts.length) {
-    ui.priceSummary.innerHTML = '<p class="summary-title">No data</p>';
+    ui.priceSummary.innerHTML = '<div class="stat-item"><span class="stat-label">Postos</span><strong class="stat-value">0</strong></div>';
     return;
   }
 
@@ -641,12 +655,22 @@ function renderSummary() {
   const maxPrice = priceList.length ? Math.max(...priceList) : Number.NaN;
 
   ui.priceSummary.innerHTML = `
-    <p class="summary-title">Distrito: ${escapeHtml(state.selectedDistrict)}</p>
-    <p class="summary-item">Postos filtrados: <strong>${state.filteredPosts.length}</strong></p>
-    <p class="summary-item">Pagina atual: <strong>${state.currentPage}/${getTotalPages()}</strong></p>
-    <p class="summary-item">Preco medio: <strong>${formatPriceValue(avgPrice)}</strong></p>
-    <p class="summary-item">Preco minimo: <strong>${formatPriceValue(minPrice)}</strong></p>
-    <p class="summary-item">Preco maximo: <strong>${formatPriceValue(maxPrice)}</strong></p>
+    <div class="stat-item">
+      <span class="stat-label">Postos</span>
+      <strong class="stat-value">${state.filteredPosts.length}</strong>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">M\u00ednimo</span>
+      <strong class="stat-value">${formatPriceValue(minPrice)}</strong>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">M\u00e9dio</span>
+      <strong class="stat-value">${formatPriceValue(avgPrice)}</strong>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">M\u00e1ximo</span>
+      <strong class="stat-value">${formatPriceValue(maxPrice)}</strong>
+    </div>
   `;
 }
 
@@ -735,13 +759,8 @@ function escapeHtml(value) {
 }
 
 function animateTitleAndPanelOpen() {
-  if (ui.title) {
-    ui.title.style.animation = "ir forwards ease-in-out 0.5s";
-  }
-
   if (ui.form) {
-    ui.form.style.display = "flex";
-    ui.form.style.animation = "voltar2 forwards ease-in-out 1s";
+    ui.form.classList.add("loaded");
   }
 }
 
@@ -756,14 +775,8 @@ function setControlsEnabled(enabled) {
 }
 
 function animateTitleAndPanelClose() {
-  if (ui.title) {
-    ui.title.style.removeProperty("animation");
-    ui.title.style.animation = "voltar forwards ease-in-out 1.5s";
-  }
-
   if (ui.form) {
-    ui.form.style.removeProperty("animation");
-    ui.form.style.animation = "ir2 forwards ease-in-out 1s";
+    ui.form.classList.remove("loaded");
   }
 }
 
