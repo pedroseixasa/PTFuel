@@ -370,6 +370,9 @@ function refreshFilteredView() {
   }
 }
 
+// Tracks which filter sections are collapsed: key = section id
+const filterCollapsed = { munHover: false, fuelsHover: false, brandHover: false };
+
 function renderFilterGroups() {
   const fuelsBase = state.districtPosts.filter((post) => {
     return (
@@ -385,6 +388,10 @@ function renderFilterGroups() {
   const municipios = buildGroupedOptions(state.districtPosts, "municipio");
   const fuels = buildGroupedOptions(fuelsBase, "fuel");
   const brands = buildGroupedOptions(brandsBase, "brand");
+
+  setupCollapsibleSection("munHover", ui.municipiosTitle, "Cities");
+  setupCollapsibleSection("fuelsHover", ui.fuelsTitle, "Fuel Type(s)");
+  setupCollapsibleSection("brandHover", ui.brandTitle, "Brand");
 
   renderFilterButtons({
     container: ui.municipiosContainer,
@@ -423,6 +430,57 @@ function renderFilterGroups() {
       state.currentPage = 1;
       refreshFilteredView();
     },
+  });
+}
+
+function setupCollapsibleSection(sectionId, titleEl, label) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  // Already wired up — just update title and apply collapse state
+  if (section.dataset.collapsible === "true") {
+    const h2 = section.querySelector("h2");
+    if (h2) h2.textContent = label;
+    const body = section.querySelector(".filter-body");
+    if (body) body.classList.toggle("collapsed", !!filterCollapsed[sectionId]);
+    const btn = section.querySelector(".filter-toggle");
+    if (btn) btn.setAttribute("aria-expanded", filterCollapsed[sectionId] ? "false" : "true");
+    return;
+  }
+
+  section.dataset.collapsible = "true";
+  section.classList.add("filter-section");
+
+  // Build toggle button around the h2
+  titleEl.textContent = label;
+
+  const toggleBtn = document.createElement("button");
+  toggleBtn.type = "button";
+  toggleBtn.className = "filter-toggle";
+  toggleBtn.setAttribute("aria-expanded", "true");
+  toggleBtn.setAttribute("aria-controls", sectionId + "-body");
+
+  const icon = document.createElement("span");
+  icon.className = "filter-toggle-icon";
+  icon.textContent = "▾";
+
+  section.insertBefore(toggleBtn, titleEl);
+  toggleBtn.appendChild(titleEl);
+  toggleBtn.appendChild(icon);
+
+  // Wrap the container in a body div
+  const container = titleEl.nextElementSibling;
+  const body = document.createElement("div");
+  body.className = "filter-body";
+  body.id = sectionId + "-body";
+  if (container) section.insertBefore(body, container);
+  else section.appendChild(body);
+  if (container) body.appendChild(container);
+
+  toggleBtn.addEventListener("click", () => {
+    filterCollapsed[sectionId] = !filterCollapsed[sectionId];
+    toggleBtn.setAttribute("aria-expanded", filterCollapsed[sectionId] ? "false" : "true");
+    body.classList.toggle("collapsed", filterCollapsed[sectionId]);
   });
 }
 
@@ -670,7 +728,7 @@ function animateTitleAndPanelOpen() {
   }
 
   if (ui.form) {
-    ui.form.style.display = "block";
+    ui.form.style.display = "flex";
     ui.form.style.animation = "voltar2 forwards ease-in-out 1s";
   }
 }
