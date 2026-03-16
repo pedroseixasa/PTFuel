@@ -18,6 +18,9 @@ const state = {
   selectedFuel: "",
   selectedBrand: "",
   sortOrder: "asc",
+  searchQuery: "",
+  currentPage: 1,
+  pageSize: 25,
 };
 
 const ui = {};
@@ -42,6 +45,7 @@ function cacheDomElements() {
   ui.fuelContainer = document.getElementById("FuelContainer");
   ui.brandContainer = document.getElementById("BrandContainer");
   ui.info = document.getElementById("info");
+  ui.filters = document.getElementById("filters");
   ui.priceSummary = document.getElementById("precoMedio");
   ui.sortBox = document.getElementById("boxx");
   ui.sortSelect = ui.sortBox ? ui.sortBox.querySelector("select") : null;
@@ -55,10 +59,56 @@ function bindStaticEvents() {
 
   if (ui.sortSelect) {
     ui.sortSelect.addEventListener("change", (event) => {
-      state.sortOrder = event.target.value === "Price: High to Low" ? "desc" : "asc";
+      state.sortOrder =
+        event.target.value === "Price: High to Low" ? "desc" : "asc";
+      state.currentPage = 1;
       refreshFilteredView();
     });
   }
+
+  setupSearchAndPaginationControls();
+}
+
+function setupSearchAndPaginationControls() {
+  if (!ui.filters) {
+    return;
+  }
+
+  ui.filters.innerHTML = `
+    <div class="search-toolbar">
+      <input id="searchInput" type="search" placeholder="Search by station, address or locality" autocomplete="off" />
+      <label for="pageSizeSelect">Results per page</label>
+      <select id="pageSizeSelect">
+        <option value="15">15</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+      </select>
+    </div>
+    <div id="pagination" class="pagination"></div>
+  `;
+
+  ui.searchInput = document.getElementById("searchInput");
+  ui.pageSizeSelect = document.getElementById("pageSizeSelect");
+  ui.pagination = document.getElementById("pagination");
+
+  if (ui.searchInput) {
+    ui.searchInput.addEventListener("input", (event) => {
+      state.searchQuery = event.target.value || "";
+      state.currentPage = 1;
+      refreshFilteredView();
+    });
+  }
+
+  if (ui.pageSizeSelect) {
+    ui.pageSizeSelect.addEventListener("change", (event) => {
+      const parsed = Number.parseInt(event.target.value, 10);
+      state.pageSize = Number.isFinite(parsed) && parsed > 0 ? parsed : 25;
+      state.currentPage = 1;
+      refreshFilteredView();
+    });
+  }
+
+  setControlsEnabled(false);
 }
 
 async function startDataLoad() {
@@ -172,7 +222,9 @@ function parseEuroPrice(value) {
     return Number.NaN;
   }
 
-  const normalized = String(value).replace(/[^\d,.-]/g, "").replace(",", ".");
+  const normalized = String(value)
+    .replace(/[^\d,.-]/g, "")
+    .replace(",", ".");
   const parsed = Number.parseFloat(normalized);
   return Number.isFinite(parsed) ? parsed : Number.NaN;
 }
@@ -205,6 +257,8 @@ function focusDistrict(pathElement, districtName) {
   state.selectedMunicipio = "";
   state.selectedFuel = "";
   state.selectedBrand = "";
+  state.searchQuery = "";
+  state.currentPage = 1;
 
   ui.cityTitle.textContent = districtName;
   ui.municipiosTitle.textContent = "Cities";
@@ -212,8 +266,13 @@ function focusDistrict(pathElement, districtName) {
   ui.brandTitle.textContent = "Brand";
 
   state.districtPosts = state.allPosts.filter((post) =>
-    sameText(post.district, districtName)
+    sameText(post.district, districtName),
   );
+
+  setControlsEnabled(true);
+  if (ui.searchInput) {
+    ui.searchInput.value = "";
+  }
 
   refreshFilteredView();
 }
@@ -228,6 +287,8 @@ function resetMapAndPanel(pathElement) {
   state.selectedBrand = "";
   state.districtPosts = [];
   state.filteredPosts = [];
+  state.searchQuery = "";
+  state.currentPage = 1;
 
   if (lastClickedElement) {
     lastClickedElement.style.fill = "";
@@ -261,6 +322,13 @@ function clearDistrictContent() {
   ui.brandContainer.innerHTML = "";
   ui.info.innerHTML = "";
   ui.priceSummary.innerHTML = "";
+  if (ui.pagination) {
+    ui.pagination.innerHTML = "";
+  }
+  if (ui.searchInput) {
+    ui.searchInput.value = "";
+  }
+  setControlsEnabled(false);
 }
 
 function refreshFilteredView() {
@@ -270,22 +338,32 @@ function refreshFilteredView() {
 
   const filtered = state.districtPosts.filter((post) => {
     const municipioMatch =
-      !state.selectedMunicipio || sameText(post.municipio, state.selectedMunicipio);
-    const fuelMatch = !state.selectedFuel || sameText(post.fuel, state.selectedFuel);
-    const brandMatch = !state.selectedBrand || sameText(post.brand, state.selectedBrand);
-    return municipioMatch && fuelMatch && brandMatch;
+      !state.selectedMunicipio ||
+      sameText(post.municipio, state.selectedMunicipio);
+    const fuelMatch =
+      !state.selectedFuel || sameText(post.fuel, state.selectedFuel);
+    const brandMatch =
+      !state.selectedBrand || sameText(post.brand, state.selectedBrand);
+    const searchMatch = postMatchesSearch(post, state.searchQuery);
+    return municipioMatch && fuelMatch && brandMatch && searchMatch;
   });
 
   filtered.sort((a, b) => {
-    const valueA = Number.isFinite(a.priceValue) ? a.priceValue : Number.POSITIVE_INFINITY;
-    const valueB = Number.isFinite(b.priceValue) ? b.priceValue : Number.POSITIVE_INFINITY;
+    const valueA = Number.isFinite(a.priceValue)
+      ? a.priceValue
+      : Number.POSITIVE_INFINITY;
+    const valueB = Number.isFinite(b.priceValue)
+      ? b.priceValue
+      : Number.POSITIVE_INFINITY;
     return state.sortOrder === "desc" ? valueB - valueA : valueA - valueB;
   });
 
   state.filteredPosts = filtered;
+  normalizeCurrentPage();
   renderFilterGroups();
-  renderPosts();
+  renderPosts(getPaginatedPosts());
   renderSummary();
+  renderPagination();
 
   if (ui.sortBox) {
     ui.sortBox.style.display = "flex";
@@ -294,7 +372,10 @@ function refreshFilteredView() {
 
 function renderFilterGroups() {
   const fuelsBase = state.districtPosts.filter((post) => {
-    return !state.selectedMunicipio || sameText(post.municipio, state.selectedMunicipio);
+    return (
+      !state.selectedMunicipio ||
+      sameText(post.municipio, state.selectedMunicipio)
+    );
   });
 
   const brandsBase = fuelsBase.filter((post) => {
@@ -314,6 +395,7 @@ function renderFilterGroups() {
       state.selectedMunicipio = value;
       state.selectedFuel = "";
       state.selectedBrand = "";
+      state.currentPage = 1;
       refreshFilteredView();
     },
   });
@@ -326,6 +408,7 @@ function renderFilterGroups() {
     onClick: (value) => {
       state.selectedFuel = value;
       state.selectedBrand = "";
+      state.currentPage = 1;
       refreshFilteredView();
     },
   });
@@ -337,6 +420,7 @@ function renderFilterGroups() {
     allLabel: "All brands",
     onClick: (value) => {
       state.selectedBrand = value;
+      state.currentPage = 1;
       refreshFilteredView();
     },
   });
@@ -355,16 +439,28 @@ function buildGroupedOptions(list, key) {
     .map(([value, count]) => ({ value, count }));
 }
 
-function renderFilterButtons({ container, options, selectedValue, allLabel, onClick }) {
+function renderFilterButtons({
+  container,
+  options,
+  selectedValue,
+  allLabel,
+  onClick,
+}) {
   container.innerHTML = "";
 
-  const allButton = createFilterButton(`${allLabel} (${state.districtPosts.length})`, !selectedValue);
+  const allButton = createFilterButton(
+    `${allLabel} (${state.districtPosts.length})`,
+    !selectedValue,
+  );
   allButton.addEventListener("click", () => onClick(""));
   container.appendChild(allButton);
 
   options.forEach((option) => {
     const isActive = sameText(option.value, selectedValue);
-    const button = createFilterButton(`${option.value} (${option.count})`, isActive);
+    const button = createFilterButton(
+      `${option.value} (${option.count})`,
+      isActive,
+    );
     button.addEventListener("click", () => onClick(option.value));
     container.appendChild(button);
   });
@@ -378,17 +474,18 @@ function createFilterButton(text, isActive) {
   return button;
 }
 
-function renderPosts() {
+function renderPosts(postsPage) {
   ui.info.innerHTML = "";
 
-  if (!state.filteredPosts.length) {
-    ui.info.innerHTML = '<p class="no-results">Sem resultados para os filtros selecionados.</p>';
+  if (!postsPage.length) {
+    ui.info.innerHTML =
+      '<p class="no-results">Sem resultados para os filtros selecionados.</p>';
     return;
   }
 
   const fragment = document.createDocumentFragment();
 
-  state.filteredPosts.forEach((post) => {
+  postsPage.forEach((post) => {
     const card = document.createElement("article");
     card.className = "posto-info";
 
@@ -414,6 +511,47 @@ function renderPosts() {
   ui.info.appendChild(fragment);
 }
 
+function renderPagination() {
+  if (!ui.pagination) {
+    return;
+  }
+
+  ui.pagination.innerHTML = "";
+
+  const totalPages = getTotalPages();
+  if (totalPages <= 1) {
+    return;
+  }
+
+  const previousButton = document.createElement("button");
+  previousButton.type = "button";
+  previousButton.className = "page-btn";
+  previousButton.textContent = "Previous";
+  previousButton.disabled = state.currentPage <= 1;
+  previousButton.addEventListener("click", () => {
+    state.currentPage = Math.max(1, state.currentPage - 1);
+    refreshFilteredView();
+  });
+
+  const pageInfo = document.createElement("span");
+  pageInfo.className = "page-info";
+  pageInfo.textContent = `Page ${state.currentPage} of ${totalPages}`;
+
+  const nextButton = document.createElement("button");
+  nextButton.type = "button";
+  nextButton.className = "page-btn";
+  nextButton.textContent = "Next";
+  nextButton.disabled = state.currentPage >= totalPages;
+  nextButton.addEventListener("click", () => {
+    state.currentPage = Math.min(totalPages, state.currentPage + 1);
+    refreshFilteredView();
+  });
+
+  ui.pagination.appendChild(previousButton);
+  ui.pagination.appendChild(pageInfo);
+  ui.pagination.appendChild(nextButton);
+}
+
 function renderSummary() {
   ui.priceSummary.innerHTML = "";
 
@@ -434,7 +572,8 @@ function renderSummary() {
 
   ui.priceSummary.innerHTML = `
     <p class="summary-title">Distrito: ${escapeHtml(state.selectedDistrict)}</p>
-    <p class="summary-item">Postos visiveis: <strong>${state.filteredPosts.length}</strong></p>
+    <p class="summary-item">Postos filtrados: <strong>${state.filteredPosts.length}</strong></p>
+    <p class="summary-item">Pagina atual: <strong>${state.currentPage}/${getTotalPages()}</strong></p>
     <p class="summary-item">Preco medio: <strong>${formatPriceValue(avgPrice)}</strong></p>
     <p class="summary-item">Preco minimo: <strong>${formatPriceValue(minPrice)}</strong></p>
     <p class="summary-item">Preco maximo: <strong>${formatPriceValue(maxPrice)}</strong></p>
@@ -461,6 +600,47 @@ function formatPriceValue(value) {
   }
 
   return `${value.toFixed(3).replace(".", ",")} EUR`;
+}
+
+function postMatchesSearch(post, query) {
+  const normalizedQuery = normalizeText(query);
+  if (!normalizedQuery) {
+    return true;
+  }
+
+  const searchableText = [
+    post.name,
+    post.address,
+    post.locality,
+    post.municipio,
+    post.brand,
+    post.fuel,
+  ]
+    .map((item) => normalizeText(item))
+    .join(" ");
+
+  return searchableText.includes(normalizedQuery);
+}
+
+function getTotalPages() {
+  return Math.max(1, Math.ceil(state.filteredPosts.length / state.pageSize));
+}
+
+function getPaginatedPosts() {
+  const startIndex = (state.currentPage - 1) * state.pageSize;
+  const endIndex = startIndex + state.pageSize;
+  return state.filteredPosts.slice(startIndex, endIndex);
+}
+
+function normalizeCurrentPage() {
+  const totalPages = getTotalPages();
+  if (state.currentPage > totalPages) {
+    state.currentPage = totalPages;
+  }
+
+  if (state.currentPage < 1) {
+    state.currentPage = 1;
+  }
 }
 
 function sameText(a, b) {
@@ -495,6 +675,16 @@ function animateTitleAndPanelOpen() {
   }
 }
 
+function setControlsEnabled(enabled) {
+  if (ui.searchInput) {
+    ui.searchInput.disabled = !enabled;
+  }
+
+  if (ui.pageSizeSelect) {
+    ui.pageSizeSelect.disabled = !enabled;
+  }
+}
+
 function animateTitleAndPanelClose() {
   if (ui.title) {
     ui.title.style.removeProperty("animation");
@@ -517,7 +707,13 @@ function zoomMapIn() {
 }
 
 function zoomMapOut() {
-  animateViewBox(ui.svg, initialViewBoxX, initialViewBoxY, initialViewBoxWidth, initialViewBoxHeight);
+  animateViewBox(
+    ui.svg,
+    initialViewBoxX,
+    initialViewBoxY,
+    initialViewBoxWidth,
+    initialViewBoxHeight,
+  );
   if (ui.mapWrapper) {
     ui.mapWrapper.style.zIndex = "2";
   }
@@ -550,17 +746,19 @@ function animateViewBox(svg, targetX, targetY, targetWidth, targetHeight) {
 
     svg.setAttribute(
       "viewBox",
-      `${currentViewBox.x} ${currentViewBox.y} ${currentViewBox.width} ${currentViewBox.height}`
+      `${currentViewBox.x} ${currentViewBox.y} ${currentViewBox.width} ${currentViewBox.height}`,
     );
 
     frame += 1;
     if (frame < totalFrames) {
       requestAnimationFrame(step);
     } else {
-      svg.setAttribute("viewBox", `${targetX} ${targetY} ${targetWidth} ${targetHeight}`);
+      svg.setAttribute(
+        "viewBox",
+        `${targetX} ${targetY} ${targetWidth} ${targetHeight}`,
+      );
     }
   }
 
   step();
 }
-

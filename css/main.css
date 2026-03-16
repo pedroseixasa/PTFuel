@@ -7,37 +7,34 @@
  * Kroc Camen, and the H5BP dev community and team.
  */
 
- 
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
 
-   html {
-    color: #222;
-    font-family: Monospace;
-    font-size: 1em;
-    line-height: 1.4;
-    background: rgb(236 236 236);
-     animation: gradient 15s ease infinite;
-    background-size: 400% 400%;
-    background-attachment: fixed;
+html {
+  color: #222;
+  font-family: Monospace;
+  font-size: 1em;
+  line-height: 1.4;
+  background: rgb(236 236 236);
+  animation: gradient 15s ease infinite;
+  background-size: 400% 400%;
+  background-attachment: fixed;
 
-      scroll-behavior: smooth;
-    
+  scroll-behavior: smooth;
 }
 
 @keyframes gradient {
   0% {
-      background-position: 0% 0%;
+    background-position: 0% 0%;
   }
   50% {
-      background-position: 100% 100%;
+    background-position: 100% 100%;
   }
   100% {
-      background-position: 0% 0%;
+    background-position: 0% 0%;
   }
 }
-
 
 /* Cool infinite background scrolling animation.
  * Twitter: @kootoopas
@@ -55,13 +52,13 @@
  */
 
 ::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  background: #b3d4fc;
+  text-shadow: none;
 }
 
 ::selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  background: #b3d4fc;
+  text-shadow: none;
 }
 
 /*
@@ -69,12 +66,12 @@
  */
 
 hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
 }
 
 /*
@@ -89,7 +86,7 @@ iframe,
 img,
 svg,
 video {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 /*
@@ -97,9 +94,9 @@ video {
  */
 
 fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /*
@@ -107,7 +104,7 @@ fieldset {
  */
 
 textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 /* ==========================================================================
@@ -115,35 +112,17 @@ textarea {
    ========================================================================== */
 
 .browserupgrade {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
 
-
-
-
- /* ==========================================================================
+/* ==========================================================================
    Author's custom styles
    ========================================================================== */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /* ==========================================================================
+/* ==========================================================================
    Helper classes
    ========================================================================== */
 
@@ -151,7 +130,7 @@ textarea {
  * Hide visually and from screen readers
  */
 
- .hidden {
+.hidden {
   display: none !important;
 }
 
@@ -223,118 +202,115 @@ textarea {
   clear: both;
 }
 
- 
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
    These examples override the primary ('mobile first') styles.
    Modify as content requires.
    ========================================================================== */
 
-   @media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
 }
 
 @media print,
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 1.25dppx),
-       (min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 1.25dppx),
+  (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
 }
 
- 
 /* ==========================================================================
    Print styles.
    Inlined to avoid the additional HTTP request:
    https://www.phpied.com/delay-loading-your-print-css/
    ========================================================================== */
 
-   @media print {
-    *,
-    *:before,
-    *:after {
-        background: transparent !important;
-        color: #000 !important; /* Black prints faster */
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster */
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
 
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
 
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
 
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
 
-    /*
+  /*
      * Don't show links that are fragment identifiers,
      * or use the `javascript:` pseudo protocol
      */
 
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
-    }
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
 
-    pre {
-        white-space: pre-wrap !important;
-    }
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
+  pre {
+    white-space: pre-wrap !important;
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
 
-    /*
+  /*
      * Printing Tables:
      * http://css-discuss.incutio.com/wiki/Printing_Tables
      */
 
-    thead {
-        display: table-header-group;
-    }
+  thead {
+    display: table-header-group;
+  }
 
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
 
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
 
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
 }
 
-svg{
+svg {
   animation: floatAnimation 2s ease-in-out 3 1s;
 }
 
-svg path:hover{
-    fill: #3a3939;
-
+svg path:hover {
+  fill: #3a3939;
 }
 
-#app{
-    width: 100%;
-    display: flex;
-
+#app {
+  width: 100%;
+  display: flex;
 }
 
 @keyframes floatAnimation {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -354,68 +330,81 @@ svg path:hover{
   width: 15%;
   flex-direction: column;
   justify-content: center;
- 
+
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 #precoMedio p:nth-child(3) {
   background-color: rgba(219, 219, 219, 0.63);
-  margin-left: auto; margin-right: auto; width: 87%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 87%;
   display: flex;
   justify-content: space-around;
 }
 
 #precoMedio p:nth-child(4) {
   background-color: rgb(255, 255, 255);
-  margin-left: auto; margin-right: auto; width: 87%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 87%;
   display: flex;
   justify-content: space-around;
 }
 
 #precoMedio p:nth-child(5) {
   background-color: rgba(219, 219, 219, 0.63);
-  margin-left: auto; margin-right: auto; width: 87%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 87%;
   display: flex;
   justify-content: space-around;
 }
 
 #precoMedio p:nth-child(6) {
   background-color: rgb(255, 255, 255);
-  margin-left: auto; margin-right: auto; width: 87%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 87%;
   display: flex;
   justify-content: space-around;
 }
 
 #precoMedio p:nth-child(7) {
   background-color: rgba(219, 219, 219, 0.63);
-  margin-left: auto; margin-right: auto; width: 87%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 87%;
   display: flex;
   justify-content: space-around;
 }
 
 #precoMedio p:nth-child(8) {
   background-color: rgb(255, 255, 255);
-  margin-left: auto; margin-right: auto; width: 87%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 87%;
   display: flex;
   justify-content: space-around;
 }
 
 #precoMedio p:nth-child(9) {
   background-color: rgba(219, 219, 219, 0.63);
-  margin-left: auto; margin-right: auto; width: 87%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 87%;
   display: flex;
   justify-content: space-around;
 }
 
-#form{
+#form {
   top: 0%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
 }
 
-
-h2{
+h2 {
   margin: 5px !important;
   margin-bottom: 0 !important;
 }
@@ -431,49 +420,39 @@ h2{
 
 @keyframes ir {
   0% {
-    transform: translateY(-50%) 
-               translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
   }
   100% {
-    transform: translateX(-50%)
-              translateY(-250%);
+    transform: translateX(-50%) translateY(-250%);
   }
 }
 
 @keyframes voltar {
   100% {
-    transform: translateY(-50%) 
-               translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
   }
   0% {
-    transform: translateX(-50%)
-              translateY(-250%);
+    transform: translateX(-50%) translateY(-250%);
   }
 }
 
-
 @keyframes ir2 {
   0% {
-    transform: translateY(-0%) 
-               translateX(-50%);
+    transform: translateY(-0%) translateX(-50%);
   }
   100% {
-    transform: translateX(-50%)
-              translateY(-150%);
+    transform: translateX(-50%) translateY(-150%);
   }
 }
 
 @keyframes voltar2 {
   100% {
-    transform: translateY(-0%) 
-               translateX(-50%);
+    transform: translateY(-0%) translateX(-50%);
   }
   0% {
-    transform: translateX(-50%)
-              translateY(-250%);
+    transform: translateX(-50%) translateY(-250%);
   }
 }
-
 
 .filterContainer {
   display: flex;
@@ -482,61 +461,57 @@ h2{
   min-width: 480px;
   padding: 0 40px;
   align-items: center;
-  }
-  
-  
+}
 
+.posto-info {
+  display: flex;
+  padding-block-end: 1.3em;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  margin-bottom: 5%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 
-  .posto-info{
-    display: flex;
-    padding-block-end: 1.3em;
-    border: 1px solid #ccc;
-    background-color: #ffffff;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 5px;
-    margin-bottom: 5%;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  }
+.municipiosContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
+.municipio-button {
+  padding: 5px;
+  margin: 5px;
+  border-color: #3a393900;
+  background-color: #ffffffd3;
+  border: 0.1px solid #c0c0c0;
+  border-radius: 5px;
+}
 
-  .municipiosContainer{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+.municipio-button:hover {
+  background-color: #302f2fb2;
+  color: white;
+}
 
-  .municipio-button{
-    padding: 5px;
-    margin: 5px;
-    border-color: #3a393900;
-    background-color: #ffffffd3;
-    border: 0.1px solid #c0c0c0;
-    border-radius: 5px;
-  }
+.municipio-button:active {
+  background-color: #000000;
+  color: white;
+}
 
-  .municipio-button:hover{
-    background-color: #302f2fb2;
-    color: white;
-  }
+.municipio-button-active {
+  padding: 5px;
+  margin: 5px;
+  border-color: #3a393900;
+  border: 0.1px solid #c0c0c0;
+  border-radius: 5px;
+  background-color: #302f2fb2;
+  color: rgb(255, 255, 255);
+}
 
-  .municipio-button:active{
-    background-color: #000000;
-    color: white;
-  }
-
-  .municipio-button-active{
-    padding: 5px;
-    margin: 5px;
-    border-color: #3a393900;
-    border: 0.1px solid #c0c0c0;
-    border-radius: 5px;
-    background-color: #302f2fb2;
-    color: rgb(255, 255, 255);
-  }
-
-  /*
+/*
   #BrandContainer {
 
     display: none !important;
@@ -569,134 +544,191 @@ h2{
 
   */
 
+#boxx {
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+}
 
+#boxx select {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  padding: 8px;
+  width: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /*font-size: 20px;*/
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
 
-  #boxx {
-    display: none;
+#boxx select option {
+  padding: 3px;
+}
+
+#info {
+  margin-top: 16px;
+  max-height: 62vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+#filters {
+  margin-top: 10px;
+}
+
+.search-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+
+.search-toolbar label {
+  font-size: 0.9rem;
+  color: #3b3b3b;
+}
+
+.search-toolbar input,
+.search-toolbar select {
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: #ffffff;
+}
+
+.search-toolbar input {
+  min-width: 280px;
+  flex: 1 1 280px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 0;
+}
+
+.page-btn {
+  border: 1px solid #c7c7c7;
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.page-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.page-info {
+  font-size: 0.95rem;
+  color: #2f2f2f;
+  font-weight: 600;
+}
+
+#info .no-results {
+  margin: 0;
+  border: 1px solid #d8d8d8;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.posto-info h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.posto-info p {
+  margin: 2px 0;
+  line-height: 1.45;
+}
+
+.posto-info a {
+  display: inline-block;
+  margin-top: 8px;
+  text-decoration: none;
+  color: #1f5a97;
+  font-weight: 600;
+}
+
+.posto-info a:hover {
+  text-decoration: underline;
+}
+
+#municipiosContainer,
+#FuelContainer,
+#BrandContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+#precoMedio {
+  border-radius: 8px;
+  min-width: 220px;
+  padding: 12px;
+  gap: 6px;
+}
+
+.summary-title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.summary-item {
+  margin: 0;
+  border-radius: 6px;
+  border: 1px solid #ececec;
+  padding: 6px 8px;
+  background: #fafafa;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 1080px) {
+  #app {
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-  }
-  
-  #boxx select {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    padding: 8px;
-    width: auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    /*font-size: 20px;*/
-   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    -webkit-appearance: button;
-    appearance: button;
-    outline: none;
-  }
-  
-
-  #boxx select option {
-    padding: 3px;
   }
 
-  #info {
-    margin-top: 16px;
-    max-height: 62vh;
-    overflow-y: auto;
-    padding-right: 8px;
-  }
-
-  #info .no-results {
-    margin: 0;
-    border: 1px solid #d8d8d8;
-    background: #fff;
-    border-radius: 8px;
-    padding: 16px;
-  }
-
-  .posto-info h3 {
-    margin: 0 0 8px;
-    font-size: 1.1rem;
-  }
-
-  .posto-info p {
-    margin: 2px 0;
-    line-height: 1.45;
-  }
-
-  .posto-info a {
-    display: inline-block;
-    margin-top: 8px;
-    text-decoration: none;
-    color: #1f5a97;
-    font-weight: 600;
-  }
-
-  .posto-info a:hover {
-    text-decoration: underline;
-  }
-
-  #municipiosContainer,
-  #FuelContainer,
-  #BrandContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 10px;
+  #tuga {
+    width: 98% !important;
   }
 
   #precoMedio {
-    border-radius: 8px;
-    min-width: 220px;
-    padding: 12px;
-    gap: 6px;
+    position: static;
+    width: calc(100% - 24px);
+    margin: 8px 12px;
   }
 
-  .summary-title {
-    margin: 0 0 6px;
-    font-size: 1rem;
-    font-weight: 700;
+  #form {
+    position: static !important;
+    transform: none !important;
+    width: calc(100% - 24px) !important;
+    margin: 8px 12px;
   }
 
-  .summary-item {
-    margin: 0;
-    border-radius: 6px;
-    border: 1px solid #ececec;
-    padding: 6px 8px;
-    background: #fafafa;
-    font-size: 0.95rem;
+  #info {
+    max-height: none;
+    padding-right: 0;
   }
 
-  @media (max-width: 1080px) {
-    #app {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #tuga {
-      width: 98% !important;
-    }
-
-    #precoMedio {
-      position: static;
-      width: calc(100% - 24px);
-      margin: 8px 12px;
-    }
-
-    #form {
-      position: static !important;
-      transform: none !important;
-      width: calc(100% - 24px) !important;
-      margin: 8px 12px;
-    }
-
-    #info {
-      max-height: none;
-      padding-right: 0;
-    }
+  .search-toolbar input {
+    min-width: 100%;
+    flex-basis: 100%;
   }
+}
 
-  .sticky {
-    position: -webkit-sticky;
-    position: sticky;
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
 
-    font-size: 15px;
-
-  }
+  font-size: 15px;
+}
