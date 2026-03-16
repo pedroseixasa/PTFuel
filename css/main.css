@@ -395,15 +395,22 @@ body {
 
 /* === Map Column === */
 #tuga {
-  flex: 0 0 48%;
+  flex: 0 0 64%;
   background: var(--map-bg);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 28px 40px;
+  padding: 28px 52px;
   position: relative;
   overflow: hidden;
+  transition: flex-basis 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Shrink map to sidebar when district is selected */
+#app.district-active #tuga {
+  flex: 0 0 28%;
+  padding: 20px 20px;
 }
 
 svg {
@@ -452,12 +459,13 @@ svg path:hover {
   border-left: 1px solid var(--border);
   overflow: hidden;
   min-width: 0;
+  transition: flex 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Empty state */
+/* Empty state — only visible when no district selected */
 #panelEmpty {
   flex: 1;
-  display: flex;
+  display: none; /* hidden by default; shown only on non-active */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -466,8 +474,9 @@ svg path:hover {
   text-align: center;
 }
 
-#form.loaded #panelEmpty {
-  display: none;
+/* Show empty state when panel is NOT yet loaded */
+#form:not(.loaded) #panelEmpty {
+  display: flex;
 }
 
 .empty-icon {
@@ -634,7 +643,9 @@ h2 {
   overflow: hidden;
   max-height: 160px;
   opacity: 1;
-  transition: max-height 0.25s ease, opacity 0.2s ease;
+  transition:
+    max-height 0.25s ease,
+    opacity 0.2s ease;
 }
 
 .filter-body.collapsed {
@@ -736,7 +747,9 @@ h2 {
   background: white;
   color: var(--text);
   outline: none;
-  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+  transition:
+    border-color 0.14s ease,
+    box-shadow 0.14s ease;
 }
 
 .search-toolbar input:focus {
@@ -902,8 +915,13 @@ h2 {
 
 /* === Animations (map) === */
 @keyframes floatAnimation {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 /* === Mobile === */
@@ -928,10 +946,15 @@ h2 {
   #tuga {
     flex: none;
     padding: 20px;
+    transition: none;
+  }
+
+  #app.district-active #tuga {
+    flex: none;
   }
 
   #tuga svg {
-    max-width: 200px;
+    max-width: 220px;
   }
 
   #form {

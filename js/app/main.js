@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function cacheDomElements() {
   ui.title = null; // removed from DOM
+  ui.app = document.getElementById("app");
   ui.form = document.getElementById("form");
   ui.svg = document.getElementById("meuSVG");
   ui.mapWrapper = document.getElementById("tuga");
@@ -640,7 +641,8 @@ function renderSummary() {
   ui.priceSummary.innerHTML = "";
 
   if (!state.filteredPosts.length) {
-    ui.priceSummary.innerHTML = '<div class="stat-item"><span class="stat-label">Postos</span><strong class="stat-value">0</strong></div>';
+    ui.priceSummary.innerHTML =
+      '<div class="stat-item"><span class="stat-label">Postos</span><strong class="stat-value">0</strong></div>';
     return;
   }
 
@@ -762,6 +764,9 @@ function animateTitleAndPanelOpen() {
   if (ui.form) {
     ui.form.classList.add("loaded");
   }
+  if (ui.app) {
+    ui.app.classList.add("district-active");
+  }
 }
 
 function setControlsEnabled(enabled) {
@@ -777,6 +782,9 @@ function setControlsEnabled(enabled) {
 function animateTitleAndPanelClose() {
   if (ui.form) {
     ui.form.classList.remove("loaded");
+  }
+  if (ui.app) {
+    ui.app.classList.remove("district-active");
   }
 }
 
