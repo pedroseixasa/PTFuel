@@ -314,7 +314,12 @@ textarea {
 html {
   font-family: "Space Grotesk", sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at 8% 12%, #ffffff, var(--bg) 45%, #e8eaee 100%);
+  background: radial-gradient(
+    circle at 8% 12%,
+    #ffffff,
+    var(--bg) 45%,
+    #e8eaee 100%
+  );
   animation: none;
 }
 
@@ -382,18 +387,14 @@ body::after {
 
 #app {
   width: 100%;
-  min-height: calc(100vh - 54px);
   display: flex;
-  gap: 24px;
-  align-items: flex-start;
+  position: relative;
   padding-top: 80px;
 }
 
 #tuga {
-  width: min(31vw, 380px);
-  min-width: 250px;
-  position: sticky;
-  top: 94px;
+  width: 90%;
+  position: relative;
   z-index: 2;
 }
 
@@ -761,14 +762,11 @@ h2 {
 
   #app {
     flex-direction: column;
-    gap: 14px;
     padding-top: 8px;
   }
 
   #tuga {
-    width: 100%;
-    max-width: 420px;
-    min-width: 0;
+    width: 98%;
     position: static;
     margin: 0 auto;
   }
