@@ -371,7 +371,11 @@ function refreshFilteredView() {
 }
 
 // Tracks which filter sections are collapsed: key = section id
-const filterCollapsed = { munHover: false, fuelsHover: false, brandHover: false };
+const filterCollapsed = {
+  munHover: false,
+  fuelsHover: false,
+  brandHover: false,
+};
 
 function renderFilterGroups() {
   const fuelsBase = state.districtPosts.filter((post) => {
@@ -444,14 +448,20 @@ function setupCollapsibleSection(sectionId, titleEl, label) {
     const body = section.querySelector(".filter-body");
     if (body) body.classList.toggle("collapsed", !!filterCollapsed[sectionId]);
     const btn = section.querySelector(".filter-toggle");
-    if (btn) btn.setAttribute("aria-expanded", filterCollapsed[sectionId] ? "false" : "true");
+    if (btn)
+      btn.setAttribute(
+        "aria-expanded",
+        filterCollapsed[sectionId] ? "false" : "true",
+      );
     return;
   }
 
   section.dataset.collapsible = "true";
   section.classList.add("filter-section");
 
-  // Build toggle button around the h2
+  // Capture the filter container (sibling of titleEl) BEFORE moving titleEl
+  const filterContainer = titleEl.nextElementSibling;
+
   titleEl.textContent = label;
 
   const toggleBtn = document.createElement("button");
@@ -464,22 +474,24 @@ function setupCollapsibleSection(sectionId, titleEl, label) {
   icon.className = "filter-toggle-icon";
   icon.textContent = "▾";
 
-  section.insertBefore(toggleBtn, titleEl);
+  // Build toggleBtn outside the DOM, then replace titleEl with it
   toggleBtn.appendChild(titleEl);
   toggleBtn.appendChild(icon);
+  section.insertBefore(toggleBtn, filterContainer || null);
 
-  // Wrap the container in a body div
-  const container = titleEl.nextElementSibling;
+  // Wrap the filter container in a body div
   const body = document.createElement("div");
   body.className = "filter-body";
   body.id = sectionId + "-body";
-  if (container) section.insertBefore(body, container);
-  else section.appendChild(body);
-  if (container) body.appendChild(container);
+  if (filterContainer) body.appendChild(filterContainer);
+  section.appendChild(body);
 
   toggleBtn.addEventListener("click", () => {
     filterCollapsed[sectionId] = !filterCollapsed[sectionId];
-    toggleBtn.setAttribute("aria-expanded", filterCollapsed[sectionId] ? "false" : "true");
+    toggleBtn.setAttribute(
+      "aria-expanded",
+      filterCollapsed[sectionId] ? "false" : "true",
+    );
     body.classList.toggle("collapsed", filterCollapsed[sectionId]);
   });
 }
