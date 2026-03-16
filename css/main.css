@@ -1,0 +1,702 @@
+/*! HTML5 Boilerplate v7.1.0 | MIT License | https://html5boilerplate.com/ */
+
+/* main.css 1.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+ 
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+   html {
+    color: #222;
+    font-family: Monospace;
+    font-size: 1em;
+    line-height: 1.4;
+    background: rgb(236 236 236);
+     animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
+
+      scroll-behavior: smooth;
+    
+}
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 0%;
+  }
+  50% {
+      background-position: 100% 100%;
+  }
+  100% {
+      background-position: 0% 0%;
+  }
+}
+
+
+/* Cool infinite background scrolling animation.
+ * Twitter: @kootoopas
+ */
+/* Exo thin font from Google. */
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Vendor-prefixed and regular ::selection selectors cannot be combined:
+ * https://stackoverflow.com/a/16982510/7133471
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+
+
+
+ /* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+ .hidden {
+  display: none !important;
+}
+
+/*
+* Hide only visually, but have it available for screen readers:
+* https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+*
+* 1. For long content, line feeds are not interpreted as spaces and small width
+*    causes content to wrap 1 word per line:
+*    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+*/
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap; /* 1 */
+}
+
+/*
+* Extends the .visuallyhidden class to allow the element
+* to be focusable when navigated to via the keyboard:
+* https://www.drupal.org/node/897638
+*/
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+  white-space: inherit;
+}
+
+/*
+* Hide visually and from screen readers, but maintain layout
+*/
+
+.invisible {
+  visibility: hidden;
+}
+
+/*
+* Clearfix: contain floats
+*
+* For modern browsers
+* 1. The space content is one way to avoid an Opera bug when the
+*    `contenteditable` attribute is included anywhere else in the document.
+*    Otherwise it causes space to appear at the top and bottom of elements
+*    that receive the `clearfix` class.
+* 2. The use of `table` rather than `block` is only necessary if using
+*    `:before` to contain the top-margins of child elements.
+*/
+
+.clearfix:before,
+.clearfix:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+ 
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+   @media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 1.25dppx),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+ 
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+   @media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster */
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre {
+        white-space: pre-wrap !important;
+    }
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+svg{
+  animation: floatAnimation 2s ease-in-out 3 1s;
+}
+
+svg path:hover{
+    fill: #3a3939;
+
+}
+
+#app{
+    width: 100%;
+    display: flex;
+
+}
+
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+#precoMedio {
+  margin-right: 3%;
+  position: absolute;
+  top: 5%;
+  right: 0%;
+  display: flex;
+  padding-block-end: 1.3em;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  width: 15%;
+  flex-direction: column;
+  justify-content: center;
+ 
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#precoMedio p:nth-child(3) {
+  background-color: rgba(219, 219, 219, 0.63);
+  margin-left: auto; margin-right: auto; width: 87%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#precoMedio p:nth-child(4) {
+  background-color: rgb(255, 255, 255);
+  margin-left: auto; margin-right: auto; width: 87%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#precoMedio p:nth-child(5) {
+  background-color: rgba(219, 219, 219, 0.63);
+  margin-left: auto; margin-right: auto; width: 87%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#precoMedio p:nth-child(6) {
+  background-color: rgb(255, 255, 255);
+  margin-left: auto; margin-right: auto; width: 87%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#precoMedio p:nth-child(7) {
+  background-color: rgba(219, 219, 219, 0.63);
+  margin-left: auto; margin-right: auto; width: 87%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#precoMedio p:nth-child(8) {
+  background-color: rgb(255, 255, 255);
+  margin-left: auto; margin-right: auto; width: 87%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#precoMedio p:nth-child(9) {
+  background-color: rgba(219, 219, 219, 0.63);
+  margin-left: auto; margin-right: auto; width: 87%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#form{
+  top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+}
+
+
+h2{
+  margin: 5px !important;
+  margin-bottom: 0 !important;
+}
+#precoMedio p {
+  margin: 0;
+  padding: 5px;
+  font-size: 1.1rem;
+}
+
+#meuSVG {
+  transition: all 0.5s ease-in-out; /* Adiciona uma transição suave de 0.5 segundos */
+}
+
+@keyframes ir {
+  0% {
+    transform: translateY(-50%) 
+               translateX(-50%);
+  }
+  100% {
+    transform: translateX(-50%)
+              translateY(-250%);
+  }
+}
+
+@keyframes voltar {
+  100% {
+    transform: translateY(-50%) 
+               translateX(-50%);
+  }
+  0% {
+    transform: translateX(-50%)
+              translateY(-250%);
+  }
+}
+
+
+@keyframes ir2 {
+  0% {
+    transform: translateY(-0%) 
+               translateX(-50%);
+  }
+  100% {
+    transform: translateX(-50%)
+              translateY(-150%);
+  }
+}
+
+@keyframes voltar2 {
+  100% {
+    transform: translateY(-0%) 
+               translateX(-50%);
+  }
+  0% {
+    transform: translateX(-50%)
+              translateY(-250%);
+  }
+}
+
+
+.filterContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 480px;
+  padding: 0 40px;
+  align-items: center;
+  }
+  
+  
+
+
+  .posto-info{
+    display: flex;
+    padding-block-end: 1.3em;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    margin-bottom: 5%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+
+
+  .municipiosContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .municipio-button{
+    padding: 5px;
+    margin: 5px;
+    border-color: #3a393900;
+    background-color: #ffffffd3;
+    border: 0.1px solid #c0c0c0;
+    border-radius: 5px;
+  }
+
+  .municipio-button:hover{
+    background-color: #302f2fb2;
+    color: white;
+  }
+
+  .municipio-button:active{
+    background-color: #000000;
+    color: white;
+  }
+
+  .municipio-button-active{
+    padding: 5px;
+    margin: 5px;
+    border-color: #3a393900;
+    border: 0.1px solid #c0c0c0;
+    border-radius: 5px;
+    background-color: #302f2fb2;
+    color: rgb(255, 255, 255);
+  }
+
+  /*
+  #BrandContainer {
+
+    display: none !important;
+  }
+
+  #brandHover:hover #BrandContainer {
+
+    display: block !important;
+  }
+
+  #FuelContainer {
+    
+    display: none !important;
+  }
+
+  #fuelsHover:hover #FuelContainer {
+
+    display: block !important;
+  }
+
+  #municipiosContainer {
+    
+    display: none !important;
+  }
+
+  #munHover:hover #municipiosContainer {
+
+    display: block !important;
+  }
+
+  */
+
+
+
+  #boxx {
+    display: none;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  #boxx select {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 8px;
+    width: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    /*font-size: 20px;*/
+   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+  }
+  
+
+  #boxx select option {
+    padding: 3px;
+  }
+
+  #info {
+    margin-top: 16px;
+    max-height: 62vh;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+  #info .no-results {
+    margin: 0;
+    border: 1px solid #d8d8d8;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .posto-info h3 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+  }
+
+  .posto-info p {
+    margin: 2px 0;
+    line-height: 1.45;
+  }
+
+  .posto-info a {
+    display: inline-block;
+    margin-top: 8px;
+    text-decoration: none;
+    color: #1f5a97;
+    font-weight: 600;
+  }
+
+  .posto-info a:hover {
+    text-decoration: underline;
+  }
+
+  #municipiosContainer,
+  #FuelContainer,
+  #BrandContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  #precoMedio {
+    border-radius: 8px;
+    min-width: 220px;
+    padding: 12px;
+    gap: 6px;
+  }
+
+  .summary-title {
+    margin: 0 0 6px;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .summary-item {
+    margin: 0;
+    border-radius: 6px;
+    border: 1px solid #ececec;
+    padding: 6px 8px;
+    background: #fafafa;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 1080px) {
+    #app {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #tuga {
+      width: 98% !important;
+    }
+
+    #precoMedio {
+      position: static;
+      width: calc(100% - 24px);
+      margin: 8px 12px;
+    }
+
+    #form {
+      position: static !important;
+      transform: none !important;
+      width: calc(100% - 24px) !important;
+      margin: 8px 12px;
+    }
+
+    #info {
+      max-height: none;
+      padding-right: 0;
+    }
+  }
+
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+
+    font-size: 15px;
+
+  }
