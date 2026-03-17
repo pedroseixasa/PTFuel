@@ -395,7 +395,7 @@ body {
 
 /* === Map Column === */
 #tuga {
-  flex: 0 0 64%;
+  flex: 0 0 68%;
   background: var(--map-bg);
   display: flex;
   flex-direction: column;
@@ -409,7 +409,7 @@ body {
 
 /* Shrink map to sidebar when district is selected */
 #app.district-active #tuga {
-  flex: 0 0 28%;
+  flex: 0 0 32%;
   padding: 20px 20px;
 }
 

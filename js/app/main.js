@@ -140,6 +140,15 @@ async function startDataLoad() {
 
   if (!state.allPosts.length) {
     renderDataError();
+    return;
+  }
+
+  // If the user already clicked a district while data was loading, render it now
+  if (state.selectedDistrict) {
+    state.districtPosts = state.allPosts.filter((post) =>
+      sameText(post.district, state.selectedDistrict),
+    );
+    refreshFilteredView();
   }
 }
 
@@ -271,6 +280,16 @@ function focusDistrict(pathElement, districtName) {
   state.currentPage = 1;
 
   ui.cityTitle.textContent = districtName;
+
+  if (state.allPosts.length === 0) {
+    // Data still loading — show a spinner in the stats area
+    if (ui.priceSummary) {
+      ui.priceSummary.innerHTML = '<div class="stat-item"><span class="stat-label">A carregar dados...</span></div>';
+    }
+    setControlsEnabled(false);
+    return;
+  }
+
   ui.municipiosTitle.textContent = "Cities";
   ui.fuelsTitle.textContent = "Fuel Type(s)";
   ui.brandTitle.textContent = "Brand";
