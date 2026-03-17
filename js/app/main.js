@@ -395,9 +395,9 @@ function refreshFilteredView() {
 
 // Tracks which filter sections are collapsed: key = section id
 const filterCollapsed = {
-  munHover: false,
-  fuelsHover: false,
-  brandHover: false,
+  munHover: true,
+  fuelsHover: true,
+  brandHover: true,
 };
 
 function renderFilterGroups() {

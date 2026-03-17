@@ -404,9 +404,10 @@ body {
   padding: 28px 52px;
   position: relative;
   overflow: hidden;
-  transition: flex-basis 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              padding 0.4s ease;
+  transition:
+    flex-basis 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    padding 0.4s ease;
 }
 
 /* Slide map out entirely when district is selected */
@@ -462,7 +463,8 @@ svg path:hover {
   flex-direction: column;
   background: var(--panel);
   border-left: 1px solid var(--border);
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   min-width: 0;
   transition: flex 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -505,14 +507,12 @@ svg path:hover {
   line-height: 1.75;
 }
 
-/* Panel content — scrollable filter area */
+/* Panel content — filters block, no separate scroll */
 .panel-content {
   display: none;
   flex-direction: column;
   flex-shrink: 0;
-  overflow-y: auto;
-  max-height: calc((100vh - var(--header-h)) * 0.58);
-  padding: 0 18px;
+  padding: 0 20px;
 }
 
 #form.loaded .panel-content {
@@ -529,7 +529,7 @@ svg path:hover {
   position: sticky;
   top: 0;
   background: var(--panel);
-  z-index: 2;
+  z-index: 4;
 }
 
 #cityTitle {
@@ -722,12 +722,17 @@ h2 {
   font-size: 0.72rem;
 }
 
-/* Search + pagination strip */
+/* Search + pagination strip — sticky below header */
 #filters {
   display: none;
   flex-shrink: 0;
-  padding: 8px 18px;
+  padding: 8px 20px;
   border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 49px;
+  background: var(--panel);
+  z-index: 3;
 }
 
 #form.loaded #filters {
@@ -814,13 +819,10 @@ h2 {
   color: var(--text-muted);
 }
 
-/* Station list */
+/* Station list — not a scroll container anymore, part of the page flow */
 #info {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 10px 18px 20px;
-  min-height: 0;
+  flex-shrink: 0;
+  padding: 10px 20px 32px;
   display: none;
 }
 
@@ -970,12 +972,11 @@ h2 {
   }
 
   .panel-content {
-    max-height: none;
     overflow-y: visible;
   }
 
   #info {
-    max-height: 50vh;
+    padding-bottom: 20px;
   }
 
   .gov-logo {
