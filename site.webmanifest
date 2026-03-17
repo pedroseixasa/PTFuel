@@ -1,11 +1,13 @@
 {
   "short_name": "PT Fuel",
   "name": "PT Fuel - Precos de Combustiveis em Portugal",
-  "icons": [{
-    "src": "icon.png",
-    "type": "image/png",
-    "sizes": "192x192"
-  }],
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
   "start_url": "/PTFuel/?utm_source=homescreen",
   "display": "standalone",
   "lang": "pt-PT",

@@ -448,7 +448,7 @@ svg path:hover {
 }
 
 .gov-logo {
-  position: fixed;
+  position: absolute;
   bottom: 12px;
   right: 12px;
   width: 92px;
