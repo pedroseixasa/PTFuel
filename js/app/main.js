@@ -86,6 +86,11 @@ function setupSearchAndPaginationControls() {
 
   ui.filters.innerHTML = `
     <div class="search-toolbar">
+      <label for="toolbarSortSelect">Sort</label>
+      <select id="toolbarSortSelect">
+        <option value="asc" selected>Price: Low to High</option>
+        <option value="desc">Price: High to Low</option>
+      </select>
       <input id="searchInput" type="search" placeholder="Search by station, address or locality" autocomplete="off" />
       <label for="pageSizeSelect">Results per page</label>
       <select id="pageSizeSelect">
@@ -99,7 +104,17 @@ function setupSearchAndPaginationControls() {
 
   ui.searchInput = document.getElementById("searchInput");
   ui.pageSizeSelect = document.getElementById("pageSizeSelect");
+  ui.toolbarSortSelect = document.getElementById("toolbarSortSelect");
   ui.pagination = document.getElementById("pagination");
+
+  if (ui.toolbarSortSelect) {
+    ui.toolbarSortSelect.value = state.sortOrder;
+    ui.toolbarSortSelect.addEventListener("change", (event) => {
+      state.sortOrder = event.target.value === "desc" ? "desc" : "asc";
+      state.currentPage = 1;
+      refreshFilteredView();
+    });
+  }
 
   if (ui.searchInput) {
     ui.searchInput.addEventListener("input", (event) => {
@@ -389,15 +404,15 @@ function refreshFilteredView() {
   renderPagination();
 
   if (ui.sortBox) {
-    ui.sortBox.style.display = "flex";
+    ui.sortBox.style.display = "none";
   }
 }
 
 // Tracks which filter sections are collapsed: key = section id
 const filterCollapsed = {
-  munHover: true,
-  fuelsHover: true,
-  brandHover: true,
+  munHover: false,
+  fuelsHover: false,
+  brandHover: false,
 };
 
 const filterExpanded = {
@@ -422,9 +437,24 @@ function renderFilterGroups() {
   const fuels = buildGroupedOptions(fuelsBase, "fuel");
   const brands = buildGroupedOptions(brandsBase, "brand");
 
-  setupCollapsibleSection("munHover", ui.municipiosTitle, "Cities");
-  setupCollapsibleSection("fuelsHover", ui.fuelsTitle, "Fuel Type(s)");
-  setupCollapsibleSection("brandHover", ui.brandTitle, "Brand");
+  setupCollapsibleSection(
+    "munHover",
+    ui.municipiosTitle,
+    "Cities",
+    state.selectedMunicipio || "All cities",
+  );
+  setupCollapsibleSection(
+    "fuelsHover",
+    ui.fuelsTitle,
+    "Fuel Type(s)",
+    state.selectedFuel || "All fuel types",
+  );
+  setupCollapsibleSection(
+    "brandHover",
+    ui.brandTitle,
+    "Brand",
+    state.selectedBrand || "All brands",
+  );
 
   renderFilterButtons({
     container: ui.municipiosContainer,
@@ -469,7 +499,7 @@ function renderFilterGroups() {
   });
 }
 
-function setupCollapsibleSection(sectionId, titleEl, label) {
+function setupCollapsibleSection(sectionId, titleEl, label, summaryText) {
   const section = document.getElementById(sectionId);
   if (!section) return;
 
@@ -477,6 +507,8 @@ function setupCollapsibleSection(sectionId, titleEl, label) {
   if (section.dataset.collapsible === "true") {
     const h2 = section.querySelector("h2");
     if (h2) h2.textContent = label;
+    const summary = section.querySelector(".filter-summary");
+    if (summary) summary.textContent = summaryText || "";
     const body = section.querySelector(".filter-body");
     if (body) body.classList.toggle("collapsed", !!filterCollapsed[sectionId]);
     const btn = section.querySelector(".filter-toggle");
@@ -502,12 +534,17 @@ function setupCollapsibleSection(sectionId, titleEl, label) {
   toggleBtn.setAttribute("aria-expanded", "true");
   toggleBtn.setAttribute("aria-controls", sectionId + "-body");
 
+  const summary = document.createElement("span");
+  summary.className = "filter-summary";
+  summary.textContent = summaryText || "";
+
   const icon = document.createElement("span");
   icon.className = "filter-toggle-icon";
   icon.textContent = "▾";
 
   // Build toggleBtn outside the DOM, then replace titleEl with it
   toggleBtn.appendChild(titleEl);
+  toggleBtn.appendChild(summary);
   toggleBtn.appendChild(icon);
   section.insertBefore(toggleBtn, filterContainer || null);
 
@@ -830,6 +867,10 @@ function animateTitleAndPanelOpen() {
 function setControlsEnabled(enabled) {
   if (ui.searchInput) {
     ui.searchInput.disabled = !enabled;
+  }
+
+  if (ui.toolbarSortSelect) {
+    ui.toolbarSortSelect.disabled = !enabled;
   }
 
   if (ui.pageSizeSelect) {
