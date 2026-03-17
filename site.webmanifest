@@ -8,7 +8,7 @@
       "sizes": "192x192"
     }
   ],
-  "start_url": "/PTFuel/?utm_source=homescreen",
+  "start_url": "/?utm_source=homescreen",
   "display": "standalone",
   "lang": "pt-PT",
   "background_color": "#eef2f7",

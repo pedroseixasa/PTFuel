@@ -4,4 +4,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://pedroseixasa.github.io/PTFuel/sitemap.xml
+Sitemap: https://ptfuel.pt/sitemap.xml
