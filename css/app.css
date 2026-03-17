@@ -1,10 +1,185 @@
 /* .container layout handled by main.css */
 
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Container responsive */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Header responsive */
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  flex-wrap: wrap;
+}
+
+.brand-logo {
+  max-width: 60px;
+  height: auto;
+  width: 100%;
+}
+
+.site-identity {
+  flex: 1;
+  min-width: 200px;
+}
+
+.site-name {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.site-sub {
+  display: block;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* SVG Map responsive */
+#meuSVG,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+#app {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Random film container */
 .random-film {
-  padding: 10px;
+  padding: 15px;
   border: 2px solid #4caf50;
+  margin: 15px 0;
+  border-radius: 8px;
+  background-color: rgba(76, 175, 80, 0.05);
 }
 
 .title {
   text-transform: uppercase;
+  margin: 0;
+  font-size: 18px;
+  word-break: break-word;
+}
+
+/* Tablet responsiveness */
+@media (max-width: 768px) {
+  .site-header {
+    gap: 15px;
+    padding: 15px 0;
+  }
+
+  .site-name {
+    font-size: 20px;
+  }
+
+  .site-sub {
+    font-size: 12px;
+  }
+
+  .brand-logo {
+    max-width: 50px;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+
+  .random-film {
+    padding: 12px;
+    margin: 10px 0;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .site-header {
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .site-name {
+    font-size: 18px;
+  }
+
+  .site-sub {
+    font-size: 11px;
+  }
+
+  .brand-logo {
+    max-width: 45px;
+  }
+
+  .container {
+    padding: 0 8px;
+  }
+
+  .random-film {
+    padding: 10px;
+    margin: 8px 0;
+  }
+
+  #meuSVG {
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+}
+
+/* Performance: Image optimization */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Lazy loading styles */
+img[loading="lazy"] {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .site-header {
+    page-break-after: avoid;
+  }
+
+  img {
+    max-width: 100%;
+  }
 }
