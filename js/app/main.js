@@ -588,9 +588,10 @@ function renderPosts(postsPage) {
         : "";
 
     card.innerHTML = `
-      <div class="posto-header">
-        <h3 class="posto-name">${escapeHtml(post.name)} <span class="posto-fuel-tag">${escapeHtml(post.fuel)}</span></h3>
+      <div class="posto-mainline">
+        <h3 class="posto-name">${escapeHtml(post.name)}</h3>
         <span class="posto-price">${formatPrice(post)}</span>
+        <span class="posto-fuel-tag">${escapeHtml(post.fuel)}</span>
       </div>
       <div class="posto-meta">
         ${escapeHtml(post.address)} &middot; ${escapeHtml(post.brand)} &middot; ${escapeHtml(post.updatedAt || "N/A")}

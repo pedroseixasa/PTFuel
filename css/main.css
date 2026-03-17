@@ -517,6 +517,8 @@ svg path:hover {
 
 #form.loaded .panel-content {
   display: flex;
+  width: min(100%, 1060px);
+  margin: 0 auto;
 }
 
 .panel-title-row {
@@ -726,9 +728,7 @@ h2 {
 #filters {
   display: none;
   flex-shrink: 0;
-  padding: 8px 20px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
   position: sticky;
   top: 49px;
   background: var(--panel);
@@ -737,6 +737,8 @@ h2 {
 
 #form.loaded #filters {
   display: block;
+  width: min(100%, 1060px);
+  margin: 6px auto 0;
 }
 
 .search-toolbar {
@@ -744,6 +746,10 @@ h2 {
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 10px;
 }
 
 .search-toolbar input {
@@ -789,6 +795,7 @@ h2 {
   align-items: center;
   gap: 8px;
   margin-top: 8px;
+  padding: 0 2px;
 }
 
 .page-btn {
@@ -822,15 +829,20 @@ h2 {
 /* Station list — not a scroll container anymore, part of the page flow */
 #info {
   flex-shrink: 0;
-  padding: 10px 20px 32px;
+  padding: 12px 20px 32px;
   display: none;
+  width: min(100%, 1060px);
+  margin: 0 auto;
 }
 
 #form.loaded #info {
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 10px;
 }
 
 #info .no-results {
+  grid-column: 1 / -1;
   padding: 14px;
   background: white;
   border: 1px solid var(--border);
@@ -842,11 +854,11 @@ h2 {
 
 /* Station cards */
 .posto-info {
-  padding: 8px 10px;
+  padding: 10px 11px;
   border: 1px solid var(--border);
-  border-radius: var(--r-sm);
+  border-radius: var(--r);
   background: white;
-  margin-bottom: 6px;
+  margin-bottom: 0;
   transition: border-color 0.14s ease;
 }
 
@@ -854,21 +866,20 @@ h2 {
   border-color: var(--border-mid);
 }
 
-.posto-header {
+.posto-mainline {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 4px;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 5px;
 }
 
 .posto-name {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.83rem;
   font-weight: 600;
   color: var(--text);
-  line-height: 1.2;
-  flex: 1;
+  line-height: 1.25;
   min-width: 0;
 }
 
@@ -882,18 +893,22 @@ h2 {
   border-radius: var(--r-pill);
   padding: 1px 6px;
   line-height: 1.4;
-  margin-left: 4px;
+  margin-left: 2px;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .posto-price {
   font-family: var(--mono);
-  font-size: 0.95rem;
+  font-size: 0.86rem;
   font-weight: 700;
   color: var(--price);
   white-space: nowrap;
   flex-shrink: 0;
+  background: #eefaf3;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--r-pill);
+  padding: 2px 7px;
 }
 
 .posto-meta {
@@ -901,7 +916,7 @@ h2 {
   align-items: center;
   gap: 0;
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.66rem;
   color: var(--text-muted);
   line-height: 1.4;
   word-break: break-word;
@@ -974,7 +989,12 @@ h2 {
   }
 
   #info {
+    width: 100%;
     padding-bottom: 20px;
+  }
+
+  #form.loaded #info {
+    grid-template-columns: 1fr;
   }
 
   .gov-logo {
