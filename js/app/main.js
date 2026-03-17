@@ -400,6 +400,12 @@ const filterCollapsed = {
   brandHover: true,
 };
 
+const filterExpanded = {
+  munHover: false,
+  fuelsHover: false,
+  brandHover: false,
+};
+
 function renderFilterGroups() {
   const fuelsBase = state.districtPosts.filter((post) => {
     return (
@@ -425,6 +431,7 @@ function renderFilterGroups() {
     options: municipios,
     selectedValue: state.selectedMunicipio,
     allLabel: "All cities",
+    sectionId: "munHover",
     onClick: (value) => {
       state.selectedMunicipio = value;
       state.selectedFuel = "";
@@ -439,6 +446,7 @@ function renderFilterGroups() {
     options: fuels,
     selectedValue: state.selectedFuel,
     allLabel: "All fuel types",
+    sectionId: "fuelsHover",
     onClick: (value) => {
       state.selectedFuel = value;
       state.selectedBrand = "";
@@ -452,6 +460,7 @@ function renderFilterGroups() {
     options: brands,
     selectedValue: state.selectedBrand,
     allLabel: "All brands",
+    sectionId: "brandHover",
     onClick: (value) => {
       state.selectedBrand = value;
       state.currentPage = 1;
@@ -537,8 +546,10 @@ function renderFilterButtons({
   options,
   selectedValue,
   allLabel,
+  sectionId,
   onClick,
 }) {
+  const VISIBLE_LIMIT = 8;
   container.innerHTML = "";
 
   const allButton = createFilterButton(
@@ -548,7 +559,26 @@ function renderFilterButtons({
   allButton.addEventListener("click", () => onClick(""));
   container.appendChild(allButton);
 
-  options.forEach((option) => {
+  const selectedIndex = options.findIndex((option) =>
+    sameText(option.value, selectedValue),
+  );
+
+  let optionsToRender = options;
+  const shouldClamp =
+    sectionId && options.length > VISIBLE_LIMIT && !filterExpanded[sectionId];
+
+  if (shouldClamp) {
+    optionsToRender = options.slice(0, VISIBLE_LIMIT);
+
+    // Keep selected option visible even when it falls outside the first items.
+    if (selectedIndex >= VISIBLE_LIMIT) {
+      const selectedOption = options[selectedIndex];
+      optionsToRender = optionsToRender.slice(0, VISIBLE_LIMIT - 1);
+      optionsToRender.push(selectedOption);
+    }
+  }
+
+  optionsToRender.forEach((option) => {
     const isActive = sameText(option.value, selectedValue);
     const button = createFilterButton(
       `${option.value} (${option.count})`,
@@ -557,6 +587,25 @@ function renderFilterButtons({
     button.addEventListener("click", () => onClick(option.value));
     container.appendChild(button);
   });
+
+  if (sectionId && options.length > VISIBLE_LIMIT) {
+    const actionWrap = document.createElement("div");
+    actionWrap.className = "filter-actions";
+
+    const toggleButton = document.createElement("button");
+    toggleButton.type = "button";
+    toggleButton.className = "filter-more-btn";
+    toggleButton.textContent = filterExpanded[sectionId]
+      ? "Ver menos"
+      : `Ver mais (${options.length - VISIBLE_LIMIT})`;
+    toggleButton.addEventListener("click", () => {
+      filterExpanded[sectionId] = !filterExpanded[sectionId];
+      renderFilterGroups();
+    });
+
+    actionWrap.appendChild(toggleButton);
+    container.appendChild(actionWrap);
+  }
 }
 
 function createFilterButton(text, isActive) {

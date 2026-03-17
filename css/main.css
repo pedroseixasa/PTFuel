@@ -665,8 +665,33 @@ h2 {
 #BrandContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  padding: 4px 0 8px;
+  gap: 6px;
+  padding: 6px 0 10px;
+}
+
+.filter-actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 2px;
+}
+
+.filter-more-btn {
+  border: 1px dashed var(--border-mid);
+  border-radius: var(--r-pill);
+  background: white;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.filter-more-btn:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+  background: var(--pill-hover);
 }
 
 /* Filter pills */
