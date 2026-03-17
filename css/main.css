@@ -887,6 +887,19 @@ h2 {
   color: var(--text-muted);
 }
 
+.ad-slot {
+  width: min(100%, 1060px);
+  margin: 2px auto 4px;
+  border: 1px dashed var(--border-mid);
+  border-radius: var(--r);
+  padding: 10px 12px;
+  background: #f8fbff;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 /* Station list — not a scroll container anymore, part of the page flow */
 #info {
   flex-shrink: 0;
@@ -1017,6 +1030,81 @@ h2 {
   background: #e3edff;
 }
 
+.site-footer {
+  width: min(100%, 1060px);
+  margin: 0 auto 18px;
+  padding: 8px 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.site-footer a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.cookie-banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--r);
+  background: #ffffff;
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.16);
+  z-index: 20;
+}
+
+.cookie-banner.is-visible {
+  display: flex;
+}
+
+.cookie-banner p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.83rem;
+  color: var(--text-2);
+}
+
+.cookie-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cookie-btn {
+  border-radius: var(--r-pill);
+  padding: 6px 11px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.cookie-btn-primary {
+  border: 1px solid #0f172a;
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.cookie-btn-secondary {
+  border: 1px solid var(--border-mid);
+  background: #ffffff;
+  color: var(--text);
+}
+
 /* === Animations (map) === */
 @keyframes floatAnimation {
   0%,
@@ -1091,6 +1179,16 @@ h2 {
   #info {
     width: 100%;
     padding-bottom: 20px;
+  }
+
+  .site-footer {
+    padding: 8px 20px 0;
+    margin-bottom: 14px;
+  }
+
+  .cookie-banner {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   #form.loaded #info {

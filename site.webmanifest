@@ -1,12 +1,15 @@
 {
-  "short_name": "",
-  "name": "",
+  "short_name": "PT Fuel",
+  "name": "PT Fuel - Precos de Combustiveis em Portugal",
   "icons": [{
     "src": "icon.png",
     "type": "image/png",
     "sizes": "192x192"
   }],
-  "start_url": "/?utm_source=homescreen",
-  "background_color": "#fafafa",
-  "theme_color": "#fafafa"
+  "start_url": "/PTFuel/?utm_source=homescreen",
+  "display": "standalone",
+  "lang": "pt-PT",
+  "background_color": "#eef2f7",
+  "theme_color": "#0f172a",
+  "description": "Comparador de precos de combustiveis em Portugal por distrito, concelho, marca e tipo."
 }

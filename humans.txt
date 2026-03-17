@@ -1,15 +1,20 @@
 # humanstxt.org/
-# The humans responsible & technology colophon
+# PT Fuel - Equipa e stack tecnica
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Pedro Seixas -- Fundador / Produto
 
 # THANKS
 
-    <name>
+    Comunidade open-source
+    Dados publicos DGEG
 
 # TECHNOLOGY COLOPHON
 
-    CSS3, HTML5
-    Apache Server Configs, jQuery, Modernizr, Normalize.css
+    HTML5, CSS3, JavaScript (ES Modules)
+    IndexedDB, Normalize.css, GitHub Pages
+
+# BUSINESS
+
+    Modelo previsto: publicidade contextual e afiliacao

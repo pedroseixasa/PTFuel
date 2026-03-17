@@ -29,6 +29,7 @@ let lastClickedElement = null;
 document.addEventListener("DOMContentLoaded", () => {
   cacheDomElements();
   bindStaticEvents();
+  setupCookieConsent();
   startDataLoad();
 });
 
@@ -70,7 +71,10 @@ function bindStaticEvents() {
   if (ui.sortSelect) {
     ui.sortSelect.addEventListener("change", (event) => {
       state.sortOrder =
-        event.target.value === "Price: High to Low" ? "desc" : "asc";
+        event.target.value === "desc" ||
+        event.target.value === "Preço: Do mais caro para o mais barato"
+          ? "desc"
+          : "asc";
       state.currentPage = 1;
       refreshFilteredView();
     });
@@ -86,13 +90,13 @@ function setupSearchAndPaginationControls() {
 
   ui.filters.innerHTML = `
     <div class="search-toolbar">
-      <label for="toolbarSortSelect">Sort</label>
+      <label for="toolbarSortSelect">Ordenar</label>
       <select id="toolbarSortSelect">
-        <option value="asc" selected>Price: Low to High</option>
-        <option value="desc">Price: High to Low</option>
+        <option value="asc" selected>Preço: Do mais barato para o mais caro</option>
+        <option value="desc">Preço: Do mais caro para o mais barato</option>
       </select>
-      <input id="searchInput" type="search" placeholder="Search by station, address or locality" autocomplete="off" />
-      <label for="pageSizeSelect">Results per page</label>
+      <input id="searchInput" type="search" placeholder="Pesquisar por posto, morada ou localidade" autocomplete="off" />
+      <label for="pageSizeSelect">Resultados por página</label>
       <select id="pageSizeSelect">
         <option value="15">15</option>
         <option value="25" selected>25</option>
@@ -300,9 +304,9 @@ function focusDistrict(pathElement, districtName) {
     return;
   }
 
-  ui.municipiosTitle.textContent = "Cities";
-  ui.fuelsTitle.textContent = "Fuel Type(s)";
-  ui.brandTitle.textContent = "Brand";
+  ui.municipiosTitle.textContent = "Concelhos";
+  ui.fuelsTitle.textContent = "Combustíveis";
+  ui.brandTitle.textContent = "Marcas";
 
   state.districtPosts = state.allPosts.filter((post) =>
     sameText(post.district, districtName),
@@ -440,27 +444,27 @@ function renderFilterGroups() {
   setupCollapsibleSection(
     "munHover",
     ui.municipiosTitle,
-    "Cities",
-    state.selectedMunicipio || "All cities",
+    "Concelhos",
+    state.selectedMunicipio || "Todos os concelhos",
   );
   setupCollapsibleSection(
     "fuelsHover",
     ui.fuelsTitle,
-    "Fuel Type(s)",
-    state.selectedFuel || "All fuel types",
+    "Combustíveis",
+    state.selectedFuel || "Todos os combustíveis",
   );
   setupCollapsibleSection(
     "brandHover",
     ui.brandTitle,
-    "Brand",
-    state.selectedBrand || "All brands",
+    "Marcas",
+    state.selectedBrand || "Todas as marcas",
   );
 
   renderFilterButtons({
     container: ui.municipiosContainer,
     options: municipios,
     selectedValue: state.selectedMunicipio,
-    allLabel: "All cities",
+    allLabel: "Todos os concelhos",
     sectionId: "munHover",
     onClick: (value) => {
       state.selectedMunicipio = value;
@@ -475,7 +479,7 @@ function renderFilterGroups() {
     container: ui.fuelContainer,
     options: fuels,
     selectedValue: state.selectedFuel,
-    allLabel: "All fuel types",
+    allLabel: "Todos os combustíveis",
     sectionId: "fuelsHover",
     onClick: (value) => {
       state.selectedFuel = value;
@@ -489,7 +493,7 @@ function renderFilterGroups() {
     container: ui.brandContainer,
     options: brands,
     selectedValue: state.selectedBrand,
-    allLabel: "All brands",
+    allLabel: "Todas as marcas",
     sectionId: "brandHover",
     onClick: (value) => {
       state.selectedBrand = value;
@@ -711,7 +715,7 @@ function renderPagination() {
   const previousButton = document.createElement("button");
   previousButton.type = "button";
   previousButton.className = "page-btn";
-  previousButton.textContent = "Previous";
+  previousButton.textContent = "Anterior";
   previousButton.disabled = state.currentPage <= 1;
   previousButton.addEventListener("click", () => {
     state.currentPage = Math.max(1, state.currentPage - 1);
@@ -720,12 +724,12 @@ function renderPagination() {
 
   const pageInfo = document.createElement("span");
   pageInfo.className = "page-info";
-  pageInfo.textContent = `Page ${state.currentPage} of ${totalPages}`;
+  pageInfo.textContent = `Página ${state.currentPage} de ${totalPages}`;
 
   const nextButton = document.createElement("button");
   nextButton.type = "button";
   nextButton.className = "page-btn";
-  nextButton.textContent = "Next";
+  nextButton.textContent = "Seguinte";
   nextButton.disabled = state.currentPage >= totalPages;
   nextButton.addEventListener("click", () => {
     state.currentPage = Math.min(totalPages, state.currentPage + 1);
@@ -956,4 +960,35 @@ function animateViewBox(svg, targetX, targetY, targetWidth, targetHeight) {
   }
 
   step();
+}
+
+function setupCookieConsent() {
+  const banner = document.getElementById("cookieBanner");
+  if (!banner) return;
+
+  const acceptButton = document.getElementById("cookieAcceptBtn");
+  const rejectButton = document.getElementById("cookieRejectBtn");
+  const consentKey = "ptfuel_cookie_consent_v1";
+  const savedConsent = localStorage.getItem(consentKey);
+
+  if (savedConsent) {
+    banner.classList.remove("is-visible");
+    return;
+  }
+
+  banner.classList.add("is-visible");
+
+  if (acceptButton) {
+    acceptButton.addEventListener("click", () => {
+      localStorage.setItem(consentKey, "accepted");
+      banner.classList.remove("is-visible");
+    });
+  }
+
+  if (rejectButton) {
+    rejectButton.addEventListener("click", () => {
+      localStorage.setItem(consentKey, "rejected");
+      banner.classList.remove("is-visible");
+    });
+  }
 }
