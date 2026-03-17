@@ -254,13 +254,8 @@ function onDistrictClick(event) {
     return;
   }
 
-  const isSamePath = lastClickedElement === event.target;
-  const isMapExpanded =
-    ui.svg.getAttribute("viewBox") !==
-    `${initialViewBoxX} ${initialViewBoxY} ${initialViewBoxWidth} ${initialViewBoxHeight}`;
-
-  if (isSamePath && isMapExpanded) {
-    resetMapAndPanel(event.target);
+  // If map is hidden (district already active), ignore map clicks
+  if (ui.app && ui.app.classList.contains("district-active")) {
     return;
   }
 
@@ -269,7 +264,6 @@ function onDistrictClick(event) {
 
 function focusDistrict(pathElement, districtName) {
   animateTitleAndPanelOpen();
-  zoomMapIn();
   highlightDistrict(pathElement);
 
   state.selectedDistrict = districtName;
@@ -284,7 +278,8 @@ function focusDistrict(pathElement, districtName) {
   if (state.allPosts.length === 0) {
     // Data still loading — show a spinner in the stats area
     if (ui.priceSummary) {
-      ui.priceSummary.innerHTML = '<div class="stat-item"><span class="stat-label">A carregar dados...</span></div>';
+      ui.priceSummary.innerHTML =
+        '<div class="stat-item"><span class="stat-label">A carregar dados...</span></div>';
     }
     setControlsEnabled(false);
     return;
@@ -308,7 +303,6 @@ function focusDistrict(pathElement, districtName) {
 
 function resetMapAndPanel(pathElement) {
   animateTitleAndPanelClose();
-  zoomMapOut();
 
   state.selectedDistrict = "";
   state.selectedMunicipio = "";
