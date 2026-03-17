@@ -674,14 +674,19 @@ function renderPosts(postsPage) {
         : "";
 
     card.innerHTML = `
-      <div class="posto-mainline">
+      <div class="posto-head">
         <h3 class="posto-name">${escapeHtml(post.name)}</h3>
         <span class="posto-price">${formatPrice(post)}</span>
-        <span class="posto-fuel-tag">${escapeHtml(post.fuel)}</span>
       </div>
+      <div class="posto-secondary">
+        <span class="posto-fuel-tag">${escapeHtml(post.fuel)}</span>
+        <span class="meta-chip">${escapeHtml(post.municipio)}</span>
+      </div>
+      <p class="posto-address">${escapeHtml(post.address)}</p>
       <div class="posto-meta">
-        ${escapeHtml(post.address)} &middot; ${escapeHtml(post.brand)} &middot; ${escapeHtml(post.updatedAt || "N/A")}
-        ${mapsUrl ? ` <a href="${mapsUrl}" target="_blank" rel="noreferrer">mapa</a>` : ""}
+        <span class="meta-chip">${escapeHtml(post.brand)}</span>
+        <span class="meta-chip">${escapeHtml(post.updatedAt || "N/A")}</span>
+        ${mapsUrl ? `<a class="posto-map-link" href="${mapsUrl}" target="_blank" rel="noreferrer">Ver no mapa</a>` : ""}
       </div>
     `;
 
