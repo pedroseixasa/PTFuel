@@ -29,6 +29,8 @@
 
     <link rel="manifest" href="site.webmanifest" />
     <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/logo.png" />
+    <link rel="shortcut icon" href="img/logo.png" />
     <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="css/normalize.css" />
@@ -59,7 +61,7 @@
 
     <div class="container">
         <header class="site-header">
-            <img class="brand-logo" src="/img/logo.png" alt="PT Fuel">
+            <img class="brand-logo" src="img/logo.png" alt="PT Fuel">
             <div class="site-identity">
                 <span class="site-name">PT FUEL</span>
                 <span class="site-sub">Preços dos combustíveis em Portugal</span>
@@ -204,10 +206,18 @@
                 <div id="filters"></div>
 
                 <aside id="adSlotTop" class="ad-slot" aria-label="Espaco publicitario">
-                    Espaco Publicitario (pronto para AdSense/afiliacao)
+                    <span class="ad-slot-label">Publicidade</span>
+                    <span id="adSlotTopText">Espaco publicitario pronto para Google AdSense</span>
                 </aside>
 
                 <div id="info"></div>
+
+                <footer class="site-footer">
+                    <span>PT Fuel © 2026</span>
+                    <a href="privacy.html">Politica de Privacidade</a>
+                    <a href="termos.html">Termos de Utilizacao</a>
+                    <span>Projeto pronto para publicidade e afiliacao</span>
+                </footer>
 
             </div>
 
@@ -216,15 +226,10 @@
 
         </div>
 
-        <footer class="site-footer">
-            <span>PT Fuel © 2026</span>
-            <a href="privacy.html">Politica de Privacidade</a>
-            <a href="termos.html">Termos de Utilizacao</a>
-            <span>Monetizacao pronta para publicidade e afiliados</span>
-        </footer>
-
-        <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Consentimento de cookies">
-            <p>Usamos cookies essenciais para o funcionamento do site. Podes aceitar ou rejeitar cookies nao essenciais.</p>
+        <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite"
+            aria-label="Consentimento de cookies">
+            <p>Usamos cookies essenciais para o funcionamento do site. Podes aceitar ou rejeitar cookies nao essenciais.
+            </p>
             <div class="cookie-actions">
                 <button id="cookieRejectBtn" type="button" class="cookie-btn cookie-btn-secondary">Rejeitar</button>
                 <button id="cookieAcceptBtn" type="button" class="cookie-btn cookie-btn-primary">Aceitar</button>
@@ -242,6 +247,13 @@
                 document.write('<script src="js/vendor/jquery-3.4.0.min.js"><\/script>');
         </script>
         <script src="js/plugins.js"></script>
+        <script>
+            window.PTFUEL_MONETIZATION = {
+                gaMeasurementId: "",
+                adsenseClientId: "",
+                affiliateBaseUrl: ""
+            };
+        </script>
         <script src="js/app/main.js" type="module"></script>
 </body>
 

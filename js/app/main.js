@@ -3,6 +3,13 @@ const API_URL =
 const DB_NAME = "meuBancoDeDados";
 const STORE_NAME = "meusDados";
 const CACHE_KEY = "output";
+const CONSENT_KEY = "ptfuel_cookie_consent_v1";
+
+const MONETIZATION_CONFIG = {
+  gaMeasurementId: window.PTFUEL_MONETIZATION?.gaMeasurementId || "",
+  adsenseClientId: window.PTFUEL_MONETIZATION?.adsenseClientId || "",
+  affiliateBaseUrl: window.PTFUEL_MONETIZATION?.affiliateBaseUrl || "",
+};
 
 const initialViewBoxX = 615;
 const initialViewBoxY = 0;
@@ -29,7 +36,8 @@ let lastClickedElement = null;
 document.addEventListener("DOMContentLoaded", () => {
   cacheDomElements();
   bindStaticEvents();
-  setupCookieConsent();
+  const consentStatus = setupCookieConsent();
+  applyConsentSettings(consentStatus);
   startDataLoad();
 });
 
@@ -52,6 +60,8 @@ function cacheDomElements() {
   ui.sortBox = document.getElementById("boxx");
   ui.sortSelect = ui.sortBox ? ui.sortBox.querySelector("select") : null;
   ui.closeBtn = document.getElementById("closePanelBtn");
+  ui.adSlotTop = document.getElementById("adSlotTop");
+  ui.adSlotTopText = document.getElementById("adSlotTopText");
 }
 
 function bindStaticEvents() {
@@ -677,6 +687,8 @@ function renderPosts(postsPage) {
         ? `https://www.google.com/maps?q=${post.latitude},${post.longitude}`
         : "";
 
+    const affiliateUrl = buildAffiliateUrl(post);
+
     card.innerHTML = `
       <div class="posto-head">
         <h3 class="posto-name">${escapeHtml(post.name)}</h3>
@@ -691,6 +703,7 @@ function renderPosts(postsPage) {
         <span class="meta-chip">${escapeHtml(post.brand)}</span>
         <span class="meta-chip">${escapeHtml(post.updatedAt || "N/A")}</span>
         ${mapsUrl ? `<a class="posto-map-link" href="${mapsUrl}" target="_blank" rel="noreferrer">Ver no mapa</a>` : ""}
+        ${affiliateUrl ? `<a class="posto-aff-link" href="${affiliateUrl}" target="_blank" rel="sponsored noreferrer">Oferta</a>` : ""}
       </div>
     `;
 
@@ -964,31 +977,135 @@ function animateViewBox(svg, targetX, targetY, targetWidth, targetHeight) {
 
 function setupCookieConsent() {
   const banner = document.getElementById("cookieBanner");
-  if (!banner) return;
+  if (!banner) return "rejected";
 
   const acceptButton = document.getElementById("cookieAcceptBtn");
   const rejectButton = document.getElementById("cookieRejectBtn");
-  const consentKey = "ptfuel_cookie_consent_v1";
-  const savedConsent = localStorage.getItem(consentKey);
+  const savedConsent = localStorage.getItem(CONSENT_KEY);
 
   if (savedConsent) {
     banner.classList.remove("is-visible");
-    return;
+    return savedConsent;
   }
 
   banner.classList.add("is-visible");
 
   if (acceptButton) {
     acceptButton.addEventListener("click", () => {
-      localStorage.setItem(consentKey, "accepted");
+      localStorage.setItem(CONSENT_KEY, "accepted");
       banner.classList.remove("is-visible");
+      applyConsentSettings("accepted");
     });
   }
 
   if (rejectButton) {
     rejectButton.addEventListener("click", () => {
-      localStorage.setItem(consentKey, "rejected");
+      localStorage.setItem(CONSENT_KEY, "rejected");
       banner.classList.remove("is-visible");
+      applyConsentSettings("rejected");
     });
+  }
+
+  return "rejected";
+}
+
+function applyConsentSettings(status) {
+  if (status === "accepted") {
+    initializeAnalytics();
+    initializeAdsense();
+    renderAdSlot("ads");
+    return;
+  }
+
+  renderAdSlot("placeholder");
+}
+
+function initializeAnalytics() {
+  const measurementId = MONETIZATION_CONFIG.gaMeasurementId;
+  if (!measurementId) {
+    return;
+  }
+
+  if (!document.getElementById("ga4-script")) {
+    const script = document.createElement("script");
+    script.id = "ga4-script";
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+    document.head.appendChild(script);
+  }
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+
+  gtag("js", new Date());
+  gtag("consent", "default", {
+    ad_storage: "granted",
+    analytics_storage: "granted",
+  });
+  gtag("config", measurementId, { anonymize_ip: true });
+}
+
+function initializeAdsense() {
+  const clientId = MONETIZATION_CONFIG.adsenseClientId;
+  if (!clientId || document.getElementById("adsense-script")) {
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.id = "adsense-script";
+  script.async = true;
+  script.crossOrigin = "anonymous";
+  script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(clientId)}`;
+  document.head.appendChild(script);
+}
+
+function renderAdSlot(mode) {
+  if (!ui.adSlotTop) {
+    return;
+  }
+
+  const clientId = MONETIZATION_CONFIG.adsenseClientId;
+
+  if (mode === "ads" && clientId) {
+    ui.adSlotTop.innerHTML = `
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="${escapeHtml(clientId)}"
+        data-ad-slot="0000000000"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    `;
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (error) {
+      renderAdSlot("placeholder");
+    }
+    return;
+  }
+
+  ui.adSlotTop.innerHTML = `
+    <span class="ad-slot-label">Publicidade</span>
+    <span id="adSlotTopText">Espaco publicitario disponivel (ativa AdSense em window.PTFUEL_MONETIZATION)</span>
+  `;
+}
+
+function buildAffiliateUrl(post) {
+  const baseUrl = MONETIZATION_CONFIG.affiliateBaseUrl;
+  if (!baseUrl) {
+    return "";
+  }
+
+  try {
+    const url = new URL(baseUrl);
+    url.searchParams.set("utm_source", "ptfuel");
+    url.searchParams.set("utm_medium", "affiliate");
+    url.searchParams.set("utm_campaign", "postos");
+    url.searchParams.set("posto", post.name || "");
+    url.searchParams.set("combustivel", post.fuel || "");
+    return url.toString();
+  } catch (error) {
+    return "";
   }
 }

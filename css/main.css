@@ -448,12 +448,13 @@ svg path:hover {
 }
 
 .gov-logo {
-  position: absolute;
-  bottom: 14px;
-  right: 14px;
-  width: 96px;
-  opacity: 0.6;
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  width: 92px;
+  opacity: 0.45;
   pointer-events: none;
+  z-index: 2;
 }
 
 /* === Data Panel === */
@@ -789,9 +790,10 @@ h2 {
   flex-shrink: 0;
   padding: 12px 24px 8px;
   position: sticky;
-  top: 49px;
+  top: 0;
   background: var(--panel);
-  z-index: 3;
+  z-index: 6;
+  box-shadow: 0 6px 12px rgba(15, 23, 42, 0.06);
 }
 
 #form.loaded #filters {
@@ -889,15 +891,24 @@ h2 {
 
 .ad-slot {
   width: min(100%, 1060px);
-  margin: 2px auto 4px;
+  margin: 4px auto 6px;
   border: 1px dashed var(--border-mid);
   border-radius: var(--r);
-  padding: 10px 12px;
+  padding: 9px 12px;
   background: #f8fbff;
   font-family: var(--mono);
   font-size: 0.72rem;
   color: var(--text-muted);
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ad-slot-label {
+  font-weight: 600;
+  color: var(--text);
 }
 
 /* Station list — not a scroll container anymore, part of the page flow */
@@ -1014,7 +1025,8 @@ h2 {
   border-top: 1px dashed #d9e1ec;
 }
 
-.posto-map-link {
+.posto-map-link,
+.posto-aff-link {
   margin-left: auto;
   font-family: var(--mono);
   font-size: 0.67rem;
@@ -1026,21 +1038,29 @@ h2 {
   padding: 3px 8px;
 }
 
-.posto-map-link:hover {
+.posto-aff-link {
+  margin-left: 0;
+}
+
+.posto-map-link:hover,
+.posto-aff-link:hover {
   background: #e3edff;
 }
 
 .site-footer {
   width: min(100%, 1060px);
-  margin: 0 auto 18px;
-  padding: 8px 24px 0;
+  margin: 8px auto 16px;
+  padding: 10px 24px 14px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 16px;
+  gap: 8px 14px;
   align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--border);
   font-family: var(--mono);
   font-size: 0.68rem;
   color: var(--text-muted);
+  background: #fff;
 }
 
 .site-footer a {
@@ -1196,9 +1216,7 @@ h2 {
   }
 
   .gov-logo {
-    position: static;
-    display: block;
-    margin: 12px auto;
+    display: none;
   }
 }
 
