@@ -103,7 +103,7 @@ function setupSearchAndPaginationControls() {
       <div class="toolbar-head">
         <div>
           <p class="toolbar-title">Refina os resultados</p>
-          <p class="toolbar-sub">Ordena por preço, procura um posto específico e controla quantos resultados queres ver por página.</p>
+          <p class="toolbar-sub">Pesquisa diretamente e escolhe a ordem de listagem em segundos.</p>
         </div>
         <span class="toolbar-pill">
           <span class="pill-dot" aria-hidden="true"></span>
@@ -111,23 +111,15 @@ function setupSearchAndPaginationControls() {
         </span>
       </div>
       <div class="toolbar-grid">
-        <label class="input-field">
-          <span class="input-label">Ordenação</span>
-          <select id="toolbarSortSelect">
-            <option value="asc" selected>Preço: do mais barato para o mais caro</option>
-            <option value="desc">Preço: do mais caro para o mais barato</option>
-          </select>
-        </label>
-        <label class="input-field input-field--wide">
+        <label class="input-field input-field--search">
           <span class="input-label">Pesquisa direta</span>
-          <input id="searchInput" type="search" placeholder="Procura por posto, morada ou localidade" autocomplete="off" />
+          <input id="searchInput" type="search" placeholder="Posto, morada ou localidade" autocomplete="off" />
         </label>
-        <label class="input-field">
-          <span class="input-label">Resultados por página</span>
-          <select id="pageSizeSelect">
-            <option value="15">15</option>
-            <option value="25" selected>25</option>
-            <option value="50">50</option>
+        <label class="input-field input-field--sort">
+          <span class="input-label">Ordenar</span>
+          <select id="toolbarSortSelect">
+            <option value="asc" selected>Mais barato primeiro</option>
+            <option value="desc">Mais caro primeiro</option>
           </select>
         </label>
       </div>
@@ -136,7 +128,6 @@ function setupSearchAndPaginationControls() {
   `;
 
   ui.searchInput = document.getElementById("searchInput");
-  ui.pageSizeSelect = document.getElementById("pageSizeSelect");
   ui.toolbarSortSelect = document.getElementById("toolbarSortSelect");
   ui.pagination = document.getElementById("pagination");
 
@@ -152,15 +143,6 @@ function setupSearchAndPaginationControls() {
   if (ui.searchInput) {
     ui.searchInput.addEventListener("input", (event) => {
       state.searchQuery = event.target.value || "";
-      state.currentPage = 1;
-      refreshFilteredView();
-    });
-  }
-
-  if (ui.pageSizeSelect) {
-    ui.pageSizeSelect.addEventListener("change", (event) => {
-      const parsed = Number.parseInt(event.target.value, 10);
-      state.pageSize = Number.isFinite(parsed) && parsed > 0 ? parsed : 25;
       state.currentPage = 1;
       refreshFilteredView();
     });
@@ -912,10 +894,6 @@ function setControlsEnabled(enabled) {
 
   if (ui.toolbarSortSelect) {
     ui.toolbarSortSelect.disabled = !enabled;
-  }
-
-  if (ui.pageSizeSelect) {
-    ui.pageSizeSelect.disabled = !enabled;
   }
 }
 
