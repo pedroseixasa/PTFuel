@@ -313,20 +313,20 @@ function focusDistrict(pathElement, districtName) {
     sameText(post.district, districtName),
   );
 
-          <div class="toolbar-grid">
-            <label class="input-field input-field--search">
-              <span class="input-label">Pesquisa direta</span>
-              <input id="searchInput" type="search" placeholder="Posto, morada ou localidade" autocomplete="off" />
-            </label>
-            <label class="input-field input-field--sort">
-              <span class="input-label">Ordenar</span>
-              <select id="toolbarSortSelect">
-                <option value="asc" selected>Mais barato primeiro</option>
-                <option value="desc">Mais caro primeiro</option>
-              </select>
-            </label>
-          </div>
-          <div id="pagination" class="pagination toolbar-pagination"></div>
+  setControlsEnabled(true);
+  if (ui.searchInput) {
+    ui.searchInput.value = "";
+  }
+
+  refreshFilteredView();
+}
+
+function resetMapAndPanel(pathElement) {
+  animateTitleAndPanelClose();
+
+  state.selectedDistrict = "";
+  state.selectedMunicipio = "";
+  state.selectedFuel = "";
   state.selectedBrand = "";
   state.districtPosts = [];
   state.filteredPosts = [];
