@@ -168,6 +168,7 @@ async function startDataLoad() {
     state.districtPosts = state.allPosts.filter((post) =>
       sameText(post.district, state.selectedDistrict),
     );
+    setControlsEnabled(true);
     refreshFilteredView();
   }
 }
