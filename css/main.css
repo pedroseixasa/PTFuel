@@ -518,12 +518,19 @@ svg path:hover {
 }
 
 #form.loaded .panel-content {
-  display: flex;
+  display: grid;
   width: min(100%, 1060px);
   margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  grid-template-areas:
+    "title title"
+    "filters stats";
+  gap: 12px 14px;
+  align-items: start;
 }
 
 .panel-title-row {
+  grid-area: title;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -566,12 +573,13 @@ svg path:hover {
 
 /* Stats bar */
 #precoMedio {
+  grid-area: stats;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   flex-wrap: wrap;
   gap: 8px;
   padding: 12px;
-  margin-top: 10px;
+  margin-top: 0;
   border: 1px solid var(--border);
   border-radius: var(--r);
   background: #f8fbff;
@@ -619,10 +627,21 @@ h2 {
 
 /* Collapsible filter sections */
 .filters-grid {
+  grid-area: filters;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 10px;
+  margin-top: 0;
+}
+
+@media (max-width: 1140px) {
+  #form.loaded .panel-content {
+    grid-template-columns: minmax(0, 1fr) 250px;
+  }
+
+  .filters-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .filter-section {
@@ -1175,6 +1194,14 @@ h2 {
     border-top: 1px solid var(--border);
     flex: none;
     min-height: 600px;
+  }
+
+  #form.loaded .panel-content {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "filters"
+      "stats";
   }
 
   #precoMedio {
