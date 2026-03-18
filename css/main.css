@@ -953,7 +953,7 @@ h2 {
   padding: 18px 20px;
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
-  width: 100%;
+  /* width: 100%; */
 }
 
 .toolbar-grid {
