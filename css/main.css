@@ -490,7 +490,7 @@ svg path:hover {
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr) 260px;
   grid-template-areas:
-    "filters title stats"
+    "filters title title"
     "filters toolbar stats"
     "filters list stats"
     "filters list stats"
@@ -953,53 +953,7 @@ h2 {
   padding: 18px 20px;
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
-  max-width: 760px;
   width: 100%;
-  justify-self: start;
-}
-
-.toolbar-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.toolbar-title {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.toolbar-sub {
-  margin: 2px 0 0;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.toolbar-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: var(--r-pill);
-  background: rgba(15, 31, 75, 0.06);
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  color: var(--text);
-  white-space: nowrap;
-}
-
-.pill-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #1ad495;
-  box-shadow: 0 0 0 4px rgba(26, 212, 149, 0.2);
 }
 
 .toolbar-grid {

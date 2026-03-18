@@ -100,16 +100,6 @@ function setupSearchAndPaginationControls() {
 
   ui.filters.innerHTML = `
     <section class="search-toolbar" aria-label="Ferramentas de pesquisa">
-      <div class="toolbar-head">
-        <div>
-          <p class="toolbar-title">Refina os resultados</p>
-          <p class="toolbar-sub">Pesquisa diretamente e escolhe a ordem de listagem em segundos.</p>
-        </div>
-        <span class="toolbar-pill">
-          <span class="pill-dot" aria-hidden="true"></span>
-          Lista em tempo real
-        </span>
-      </div>
       <div class="toolbar-grid">
         <label class="input-field input-field--search">
           <span class="input-label">Pesquisa direta</span>
@@ -323,20 +313,20 @@ function focusDistrict(pathElement, districtName) {
     sameText(post.district, districtName),
   );
 
-  setControlsEnabled(true);
-  if (ui.searchInput) {
-    ui.searchInput.value = "";
-  }
-
-  refreshFilteredView();
-}
-
-function resetMapAndPanel(pathElement) {
-  animateTitleAndPanelClose();
-
-  state.selectedDistrict = "";
-  state.selectedMunicipio = "";
-  state.selectedFuel = "";
+          <div class="toolbar-grid">
+            <label class="input-field input-field--search">
+              <span class="input-label">Pesquisa direta</span>
+              <input id="searchInput" type="search" placeholder="Posto, morada ou localidade" autocomplete="off" />
+            </label>
+            <label class="input-field input-field--sort">
+              <span class="input-label">Ordenar</span>
+              <select id="toolbarSortSelect">
+                <option value="asc" selected>Mais barato primeiro</option>
+                <option value="desc">Mais caro primeiro</option>
+              </select>
+            </label>
+          </div>
+          <div id="pagination" class="pagination toolbar-pagination"></div>
   state.selectedBrand = "";
   state.districtPosts = [];
   state.filteredPosts = [];
