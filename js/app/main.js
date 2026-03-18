@@ -99,21 +99,40 @@ function setupSearchAndPaginationControls() {
   }
 
   ui.filters.innerHTML = `
-    <div class="search-toolbar">
-      <label for="toolbarSortSelect">Ordenar</label>
-      <select id="toolbarSortSelect">
-        <option value="asc" selected>Preço: Do mais barato para o mais caro</option>
-        <option value="desc">Preço: Do mais caro para o mais barato</option>
-      </select>
-      <input id="searchInput" type="search" placeholder="Pesquisar por posto, morada ou localidade" autocomplete="off" />
-      <label for="pageSizeSelect">Resultados por página</label>
-      <select id="pageSizeSelect">
-        <option value="15">15</option>
-        <option value="25" selected>25</option>
-        <option value="50">50</option>
-      </select>
-    </div>
-    <div id="pagination" class="pagination"></div>
+    <section class="search-toolbar" aria-label="Ferramentas de pesquisa">
+      <div class="toolbar-head">
+        <div>
+          <p class="toolbar-title">Refina os resultados</p>
+          <p class="toolbar-sub">Ordena por preço, procura um posto específico e controla quantos resultados queres ver por página.</p>
+        </div>
+        <span class="toolbar-pill">
+          <span class="pill-dot" aria-hidden="true"></span>
+          Lista em tempo real
+        </span>
+      </div>
+      <div class="toolbar-grid">
+        <label class="input-field">
+          <span class="input-label">Ordenação</span>
+          <select id="toolbarSortSelect">
+            <option value="asc" selected>Preço: do mais barato para o mais caro</option>
+            <option value="desc">Preço: do mais caro para o mais barato</option>
+          </select>
+        </label>
+        <label class="input-field input-field--wide">
+          <span class="input-label">Pesquisa direta</span>
+          <input id="searchInput" type="search" placeholder="Procura por posto, morada ou localidade" autocomplete="off" />
+        </label>
+        <label class="input-field">
+          <span class="input-label">Resultados por página</span>
+          <select id="pageSizeSelect">
+            <option value="15">15</option>
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+          </select>
+        </label>
+      </div>
+      <div id="pagination" class="pagination toolbar-pagination"></div>
+    </section>
   `;
 
   ui.searchInput = document.getElementById("searchInput");
