@@ -472,6 +472,20 @@ svg path:hover {
   transition: flex 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+#form.loaded {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 240px;
+  grid-template-areas:
+    "title title title"
+    "filters toolbar stats"
+    "filters list stats"
+    "filters list stats"
+    "footer footer footer";
+  column-gap: 14px;
+  align-items: start;
+  padding: 0 24px 16px;
+}
+
 /* Empty state — only visible when no district selected */
 #panelEmpty {
   flex: 1;
@@ -515,19 +529,11 @@ svg path:hover {
   display: none;
   flex-direction: column;
   flex-shrink: 0;
-  padding: 0 24px;
+  padding: 0;
 }
 
 #form.loaded .panel-content {
-  display: grid;
-  width: min(100%, 1060px);
-  margin: 0 auto;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  grid-template-areas:
-    "title title"
-    "filters stats";
-  gap: 12px 14px;
-  align-items: start;
+  display: contents;
 }
 
 .panel-title-row {
@@ -585,6 +591,8 @@ svg path:hover {
   border-radius: var(--r);
   background: #f8fbff;
   flex-shrink: 0;
+  position: sticky;
+  top: 66px;
 }
 
 .stat-item {
@@ -630,18 +638,14 @@ h2 {
 .filters-grid {
   grid-area: filters;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 12px;
-  margin-top: 0;
+  margin-top: 10px;
 }
 
 @media (max-width: 1140px) {
-  #form.loaded .panel-content {
-    grid-template-columns: minmax(0, 1fr) 250px;
-  }
-
-  .filters-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  #form.loaded {
+    grid-template-columns: 240px minmax(0, 1fr) 220px;
   }
 }
 
@@ -819,8 +823,13 @@ h2 {
 
 #form.loaded #filters {
   display: block;
-  width: min(100%, 1060px);
-  margin: 6px auto 0;
+  grid-area: toolbar;
+  width: 100%;
+  margin: 10px 0 0;
+  padding: 0;
+  position: static;
+  box-shadow: none;
+  background: transparent;
 }
 
 .search-toolbar {
@@ -943,8 +952,35 @@ h2 {
 
 #form.loaded #info {
   display: grid;
+  grid-area: list;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 10px;
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 0 0 20px;
+}
+
+#form.loaded .site-footer {
+  grid-area: footer;
+  padding: 10px 0 0;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  #form.loaded {
+    grid-template-columns: 220px minmax(0, 1fr);
+    grid-template-areas:
+      "title title"
+      "filters toolbar"
+      "filters list"
+      "stats stats"
+      "footer footer";
+  }
+
+  #precoMedio {
+    position: static;
+    margin-top: 6px;
+  }
 }
 
 #info .no-results {
@@ -1197,15 +1233,23 @@ h2 {
     min-height: 600px;
   }
 
+  #form.loaded {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
   #form.loaded .panel-content {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "filters"
-      "stats";
+    display: flex;
+  }
+
+  #form.loaded .panel-content {
+    width: 100%;
+    margin: 0;
   }
 
   #precoMedio {
+    position: static;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1228,6 +1272,22 @@ h2 {
   #info {
     width: 100%;
     padding-bottom: 20px;
+  }
+
+  #form.loaded #filters {
+    width: min(100%, 1060px);
+    margin: 6px auto 0;
+    padding: 12px 24px 8px;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 6px 12px rgba(15, 23, 42, 0.06);
+    background: var(--panel);
+  }
+
+  #form.loaded #info {
+    width: min(100%, 1060px);
+    margin: 0 auto;
+    padding: 14px 24px 20px;
   }
 
   .site-footer {
