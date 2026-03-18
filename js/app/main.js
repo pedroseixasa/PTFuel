@@ -170,6 +170,10 @@ async function startDataLoad() {
     );
     setControlsEnabled(true);
     refreshFilteredView();
+    // Show ads when data loads
+    if (window.showAdSlots) {
+      window.showAdSlots();
+    }
   }
 }
 
@@ -320,6 +324,11 @@ function focusDistrict(pathElement, districtName) {
   }
 
   refreshFilteredView();
+  
+  // Show ads when a district is selected
+  if (window.showAdSlots) {
+    window.showAdSlots();
+  }
 }
 
 function resetMapAndPanel(pathElement) {

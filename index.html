@@ -208,6 +208,14 @@
 
                     <div id="precoMedio"></div>
 
+                    <!-- Ad Slot 1: Between Price and Filters -->
+                    <div style="margin: 16px 0; display: none;" id="ad-slot-1">
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:100%;max-width:728px;height:90px"
+                             data-ad-client="ca-pub-1601336674013871"
+                             data-ad-slot="1234567890"></ins>
+                    </div>
+
                     <div class="filters-grid">
                         <div id="munHover">
                             <h2 id="municipiosTitle"></h2>
@@ -236,6 +244,16 @@
                 </div>
 
                 <div id="filters"></div>
+
+                <!-- Ad Slot 2: Between Filters and Results -->
+                <div style="margin: 16px 0; display: none;" id="ad-slot-2">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-1601336674013871"
+                         data-ad-slot="2345678901"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
 
                 <div id="info"></div>
 
@@ -279,6 +297,24 @@
                 affiliateBaseUrl: ""
             };
         </script>
+
+        <!-- AdSense: Push Ads Initialization -->
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-1601336674013871",
+                enable_page_level_ads: true
+            });
+
+            // Show ad slots when data loads
+            window.showAdSlots = function() {
+                const adSlots = document.querySelectorAll('[id^="ad-slot-"]');
+                adSlots.forEach(slot => {
+                    slot.style.display = 'block';
+                });
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            };
+        </script>
+
         <script src="js/app/main.js" type="module"></script>
 </body>
 
