@@ -514,6 +514,44 @@ svg path:hover {
   text-align: center;
 }
 
+.home-intro {
+  width: 100%;
+  max-width: 540px;
+  margin-top: 10px;
+  padding: 18px 18px 14px;
+  border: 1px solid rgba(15, 31, 75, 0.1);
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 31, 75, 0.04),
+    rgba(255, 255, 255, 0.94)
+  );
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+}
+
+.home-intro-lead {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.home-intro-list {
+  margin: 14px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.55;
+}
+
+.home-intro-list li {
+  padding-left: 4px;
+}
+
 /* Show empty state when panel is NOT yet loaded */
 #form:not(.loaded) #panelEmpty {
   display: flex;
@@ -1401,6 +1439,11 @@ h2 {
 
   .filter-summary {
     max-width: 100%;
+  }
+
+  .home-intro {
+    max-width: none;
+    padding: 16px;
   }
 
   .panel-content {
