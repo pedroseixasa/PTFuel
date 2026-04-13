@@ -36,9 +36,9 @@
     <link rel="shortcut icon" href="img/logo.png" />
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="css/normalize.css?v=20260404" />
-    <link rel="stylesheet" href="css/main.css?v=20260404" />
-    <link rel="stylesheet" href="css/app.css?v=20260404" />
+    <link rel="stylesheet" href="css/normalize.css?v=20260413" />
+    <link rel="stylesheet" href="css/main.css?v=20260413" />
+    <link rel="stylesheet" href="css/app.css?v=20260413" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -55,19 +55,6 @@
             "inLanguage": "pt-PT",
             "description": "Comparador de precos de combustiveis em Portugal"
         }
-    </script>
-
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1601336674013871"
-        crossorigin="anonymous"></script>
-
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LFE3L60B2Q"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-LFE3L60B2Q');
     </script>
 
     <!-- SEO: Additional Meta Tags -->
@@ -204,6 +191,40 @@
                             <li>Pesquisa direta por nome, morada ou localidade</li>
                         </ul>
                     </div>
+
+                    <div class="home-snapshot" id="homeSnapshot" aria-live="polite">
+                        <div class="home-stat">
+                            <span class="home-stat-label">Postos analisados</span>
+                            <strong class="home-stat-value" id="homeStatPosts">--</strong>
+                        </div>
+                        <div class="home-stat">
+                            <span class="home-stat-label">Distritos cobertos</span>
+                            <strong class="home-stat-value" id="homeStatDistricts">--</strong>
+                        </div>
+                        <div class="home-stat">
+                            <span class="home-stat-label">Última atualização</span>
+                            <strong class="home-stat-value" id="homeStatUpdated">--</strong>
+                        </div>
+                    </div>
+
+                    <div class="home-content-grid">
+                        <article class="home-card">
+                            <h2>Como funciona</h2>
+                            <p>Abres um distrito, restringes por concelho e combustível, e vês uma lista ordenada com o
+                                preço mais baixo primeiro. A pesquisa direta ajuda a encontrar o posto certo sem
+                                depender do mapa.</p>
+                        </article>
+                        <article class="home-card">
+                            <h2>O que encontras</h2>
+                            <p>Marca, tipo de combustível, morada, localidade, data de atualização e ligação para mapa.
+                                É uma página utilitária, não uma landing page vazia.</p>
+                        </article>
+                        <article class="home-card">
+                            <h2>Porque isto tem valor</h2>
+                            <p>O utilizador chega com uma intenção clara: comparar preços reais e tomar uma decisão
+                                rápida. Esse comportamento é exatamente o que justifica uma página de conteúdo útil.</p>
+                        </article>
+                    </div>
                 </div>
 
                 <div class="panel-content">
@@ -284,16 +305,16 @@
             window.jQuery ||
                 document.write('<script src="js/vendor/jquery-3.4.0.min.js"><\/script>');
         </script>
-        <script src="js/plugins.js?v=20260404"></script>
+        <script src="js/plugins.js?v=20260413"></script>
         <script>
             window.PTFUEL_MONETIZATION = {
-                gaMeasurementId: "",
-                adsenseClientId: "",
+                gaMeasurementId: "G-LFE3L60B2Q",
+                adsenseClientId: "ca-pub-1601336674013871",
                 affiliateBaseUrl: ""
             };
         </script>
 
-        <script src="js/app/main.js?v=20260404" type="module"></script>
+        <script src="js/app/main.js?v=20260413" type="module"></script>
 </body>
 
 </html>

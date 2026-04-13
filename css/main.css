@@ -552,6 +552,72 @@ svg path:hover {
   padding-left: 4px;
 }
 
+.home-snapshot {
+  width: 100%;
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.home-stat {
+  padding: 14px 16px;
+  border: 1px solid rgba(15, 31, 75, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.home-stat-label {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.home-stat-value {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.home-content-grid {
+  width: 100%;
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.home-card {
+  padding: 16px 16px 14px;
+  border: 1px solid rgba(15, 31, 75, 0.1);
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.96),
+    rgba(245, 248, 255, 0.96)
+  );
+  box-shadow: var(--shadow-soft);
+}
+
+.home-card h2 {
+  margin: 0 0 8px !important;
+  font-size: 0.78rem !important;
+}
+
+.home-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
 /* Show empty state when panel is NOT yet loaded */
 #form:not(.loaded) #panelEmpty {
   display: flex;
@@ -1444,6 +1510,11 @@ h2 {
   .home-intro {
     max-width: none;
     padding: 16px;
+  }
+
+  .home-snapshot,
+  .home-content-grid {
+    grid-template-columns: 1fr;
   }
 
   .panel-content {

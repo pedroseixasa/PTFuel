@@ -28,6 +28,8 @@ const state = {
   searchQuery: "",
   currentPage: 1,
   pageSize: 25,
+  consentStatus: "rejected",
+  dataReady: false,
 };
 
 const ui = {};
@@ -60,8 +62,9 @@ function cacheDomElements() {
   ui.sortBox = document.getElementById("boxx");
   ui.sortSelect = ui.sortBox ? ui.sortBox.querySelector("select") : null;
   ui.closeBtn = document.getElementById("closePanelBtn");
-  ui.adSlotTop = document.getElementById("adSlotTop");
-  ui.adSlotTopText = document.getElementById("adSlotTopText");
+  ui.homeStatPosts = document.getElementById("homeStatPosts");
+  ui.homeStatDistricts = document.getElementById("homeStatDistricts");
+  ui.homeStatUpdated = document.getElementById("homeStatUpdated");
 }
 
 function bindStaticEvents() {
@@ -159,9 +162,15 @@ async function startDataLoad() {
   }
 
   if (!state.allPosts.length) {
+    state.dataReady = true;
+    renderHomepageContent();
     renderDataError();
     return;
   }
+
+  state.dataReady = true;
+  renderHomepageContent();
+  maybeLoadAdsense();
 
   // If the user already clicked a district while data was loading, render it now
   if (state.selectedDistrict) {
@@ -792,6 +801,29 @@ function renderDataError() {
   `;
 }
 
+function renderHomepageContent() {
+  if (ui.homeStatPosts) {
+    ui.homeStatPosts.textContent = String(state.allPosts.length || 0);
+  }
+
+  if (ui.homeStatDistricts) {
+    const districtCount = new Set(
+      state.allPosts
+        .map((post) => normalizeText(post.district))
+        .filter(Boolean),
+    ).size;
+    ui.homeStatDistricts.textContent = String(districtCount || 0);
+  }
+
+  if (ui.homeStatUpdated) {
+    const updates = state.allPosts
+      .map((post) => post.updatedAt)
+      .filter(Boolean)
+      .sort((a, b) => String(b).localeCompare(String(a), "pt-PT"));
+    ui.homeStatUpdated.textContent = updates[0] || "Dados em tempo real";
+  }
+}
+
 function formatPrice(post) {
   if (Number.isFinite(post.priceValue)) {
     return formatPriceValue(post.priceValue);
@@ -998,14 +1030,13 @@ function setupCookieConsent() {
 }
 
 function applyConsentSettings(status) {
+  state.consentStatus = status;
+
   if (status === "accepted") {
     initializeAnalytics();
-    initializeAdsense();
-    renderAdSlot("ads");
-    return;
   }
 
-  renderAdSlot("placeholder");
+  maybeLoadAdsense();
 }
 
 function initializeAnalytics() {
@@ -1035,6 +1066,14 @@ function initializeAnalytics() {
   gtag("config", measurementId, { anonymize_ip: true });
 }
 
+function maybeLoadAdsense() {
+  if (state.consentStatus !== "accepted" || !state.dataReady) {
+    return;
+  }
+
+  initializeAdsense();
+}
+
 function initializeAdsense() {
   const clientId = MONETIZATION_CONFIG.adsenseClientId;
   if (!clientId || document.getElementById("adsense-script")) {
@@ -1047,36 +1086,6 @@ function initializeAdsense() {
   script.crossOrigin = "anonymous";
   script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(clientId)}`;
   document.head.appendChild(script);
-}
-
-function renderAdSlot(mode) {
-  if (!ui.adSlotTop) {
-    return;
-  }
-
-  const clientId = MONETIZATION_CONFIG.adsenseClientId;
-
-  if (mode === "ads" && clientId) {
-    ui.adSlotTop.innerHTML = `
-      <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="${escapeHtml(clientId)}"
-        data-ad-slot="0000000000"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    `;
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (error) {
-      renderAdSlot("placeholder");
-    }
-    return;
-  }
-
-  ui.adSlotTop.innerHTML = `
-    <span class="ad-slot-label">Publicidade</span>
-    <span id="adSlotTopText">Espaco publicitario disponivel (ativa AdSense em window.PTFUEL_MONETIZATION)</span>
-  `;
 }
 
 function buildAffiliateUrl(post) {
