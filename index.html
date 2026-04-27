@@ -56,6 +56,46 @@
             "description": "Comparador de precos de combustiveis em Portugal"
         }
     </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Como o PT Fuel apresenta os preços?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "O PT Fuel cruza dados públicos da DGEG com filtros por distrito, concelho, marca e combustível para mostrar uma comparação rápida e prática."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Os dados são atualizados com que frequência?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "O site procura atualizar a base diariamente e guarda cache local no navegador para reduzir o tempo de carregamento quando voltas a consultar a página."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "O que posso fazer se um distrito não mostrar resultados?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Podes mudar de distrito, limpar filtros ou voltar a carregar a página. Se a origem pública estiver temporariamente indisponível, o site tenta usar o cache local."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "O PT Fuel vende combustível ou representa uma marca?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Não. O PT Fuel é um comparador independente e informativo, criado para ajudar a encontrar postos e preços de forma rápida."
+                    }
+                }
+            ]
+        }
+    </script>
 
     <!-- SEO: Additional Meta Tags -->
     <meta name="language" content="Portuguese" />
@@ -183,12 +223,21 @@
                     <p class="empty-sub">Clica num distrito no mapa para ver postos, preços e filtros de comparação.</p>
 
                     <div class="home-intro">
-                        <p class="home-intro-lead">PT Fuel foi pensado para responder rápido: escolher distrito, filtrar
-                            por concelho, combustível e marca, e chegar aos postos mais relevantes sem ruído visual.</p>
+                        <p class="home-intro-lead">PT Fuel é um comparador independente de preços de combustíveis em
+                            Portugal.
+                            A página junta mapa, filtros e pesquisa direta para ajudar a escolher rapidamente o posto
+                            certo
+                            sem depender de uma landing page vazia.</p>
+                        <p class="home-intro-lead">Os resultados são apresentados com base em dados públicos da DGEG e
+                            em
+                            cache local para reduzir o tempo de carregamento. O objetivo é simples: dar contexto útil,
+                            transparência e menos fricção antes de abastecer.</p>
                         <ul class="home-intro-list">
                             <li>Dados oficiais da DGEG atualizados diariamente</li>
                             <li>Comparação por distrito, concelho, marca e combustível</li>
                             <li>Pesquisa direta por nome, morada ou localidade</li>
+                            <li>Ordenação por preço, com ligação rápida para mapa</li>
+                            <li>Política de privacidade, termos e consentimento de cookies</li>
                         </ul>
                     </div>
 
@@ -200,6 +249,14 @@
                         <div class="home-stat">
                             <span class="home-stat-label">Distritos cobertos</span>
                             <strong class="home-stat-value" id="homeStatDistricts">--</strong>
+                        </div>
+                        <div class="home-stat">
+                            <span class="home-stat-label">Fonte de dados</span>
+                            <strong class="home-stat-value" id="homeStatSource">DGEG</strong>
+                        </div>
+                        <div class="home-stat">
+                            <span class="home-stat-label">Modo de consulta</span>
+                            <strong class="home-stat-value" id="homeStatMode">Mapa + pesquisa</strong>
                         </div>
                         <div class="home-stat">
                             <span class="home-stat-label">Última atualização</span>
@@ -221,8 +278,29 @@
                         </article>
                         <article class="home-card">
                             <h2>Porque isto tem valor</h2>
-                            <p>O utilizador chega com uma intenção clara: comparar preços reais e tomar uma decisão
-                                rápida. Esse comportamento é exatamente o que justifica uma página de conteúdo útil.</p>
+                            <p>O utilizador chega com uma intenção clara: comparar preços reais, filtrar por localização
+                                e
+                                tomar uma decisão rápida. Esse comportamento é exatamente o que justifica uma página de
+                                conteúdo útil e não apenas uma vitrine vazia.</p>
+                        </article>
+                        <article class="home-card">
+                            <h2>Fonte e atualização</h2>
+                            <p>Os dados são obtidos de uma origem pública e o site mantém uma cache local para acelerar
+                                o carregamento. Quando a API está disponível, a página volta a sincronizar e atualiza os
+                                indicadores da vista principal.</p>
+                        </article>
+                        <article class="home-card">
+                            <h2>Como interpretar os resultados</h2>
+                            <p>O preço mostrado depende do distrito, do concelho, da marca e do tipo de combustível.
+                                Também podes ordenar por preço e abrir a localização em mapa para confirmar o posto
+                                antes
+                                de sair de casa.</p>
+                        </article>
+                        <article class="home-card">
+                            <h2>Perguntas frequentes</h2>
+                            <p>Se algum resultado parecer em falta, volta ao mapa, limpa filtros ou recarrega a página.
+                                O site foi desenhado para continuar útil mesmo quando a origem externa está lenta ou
+                                indisponível temporariamente.</p>
                         </article>
                     </div>
                 </div>
@@ -277,7 +355,7 @@
                     <span>PT Fuel © 2026</span>
                     <a href="privacy.html">Politica de Privacidade</a>
                     <a href="termos.html">Termos de Utilizacao</a>
-                    <span>Projeto pronto para publicidade e afiliacao</span>
+                    <span>Projeto independente com foco em utilidade, transparencia e publicidade responsavel</span>
                 </footer>
 
             </div>

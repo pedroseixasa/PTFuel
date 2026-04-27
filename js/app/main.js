@@ -64,6 +64,8 @@ function cacheDomElements() {
   ui.closeBtn = document.getElementById("closePanelBtn");
   ui.homeStatPosts = document.getElementById("homeStatPosts");
   ui.homeStatDistricts = document.getElementById("homeStatDistricts");
+  ui.homeStatSource = document.getElementById("homeStatSource");
+  ui.homeStatMode = document.getElementById("homeStatMode");
   ui.homeStatUpdated = document.getElementById("homeStatUpdated");
 }
 
@@ -813,6 +815,14 @@ function renderHomepageContent() {
         .filter(Boolean),
     ).size;
     ui.homeStatDistricts.textContent = String(districtCount || 0);
+  }
+
+  if (ui.homeStatSource) {
+    ui.homeStatSource.textContent = "DGEG";
+  }
+
+  if (ui.homeStatMode) {
+    ui.homeStatMode.textContent = "Mapa + pesquisa";
   }
 
   if (ui.homeStatUpdated) {
