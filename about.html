@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sobre o PT Fuel</title>
+    <meta name="description"
+        content="Saiba como o PT Fuel funciona, de onde vêm os dados e qual a política editorial do projeto." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://ptfuel.pt/about.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: "Space Grotesk", sans-serif;
+            background: linear-gradient(180deg, #f7f9ff 0%, #eef3ff 55%, #f7f8fb 100%);
+            color: var(--text);
+        }
+
+        .page-shell {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 32px 20px 56px;
+        }
+
+        .page-header {
+            padding: 22px 24px;
+            border: 1px solid rgba(15, 31, 75, 0.1);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 18px 34px rgba(15, 23, 42, 0.08);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(15, 31, 75, 0.08);
+            color: var(--accent);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            line-height: 1.05;
+        }
+
+        .lede {
+            margin: 0;
+            max-width: 72ch;
+            font-size: 1.02rem;
+            line-height: 1.75;
+            color: var(--text-2);
+        }
+
+        .page-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 0.9fr;
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .panel {
+            padding: 22px;
+            border: 1px solid rgba(15, 31, 75, 0.1);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .panel p,
+        .panel li {
+            color: var(--text-2);
+            line-height: 1.75;
+        }
+
+        .panel ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .stack {
+            display: grid;
+            gap: 14px;
+        }
+
+        .stat-card {
+            padding: 16px 18px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(15, 31, 75, 0.05), rgba(255, 255, 255, 0.95));
+            border: 1px solid rgba(15, 31, 75, 0.08);
+        }
+
+        .stat-label {
+            display: block;
+            margin-bottom: 6px;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+
+        .back-link {
+            display: inline-flex;
+            margin-top: 18px;
+            color: #1d4ed8;
+            text-decoration: none;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.8rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-left: 4px solid var(--accent-soft);
+            border-radius: 14px;
+            background: rgba(31, 78, 221, 0.06);
+            color: var(--text-2);
+        }
+
+        @media (max-width: 900px) {
+            .page-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "Sobre o PT Fuel",
+            "url": "https://ptfuel.pt/about.html",
+            "description": "Página sobre o funcionamento, propósito e política editorial do PT Fuel."
+        }
+    </script>
+</head>
+
+<body>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">PT Fuel / Sobre</p>
+            <h1>Comparação de combustíveis com foco em utilidade real</h1>
+            <p class="lede">O PT Fuel foi criado para transformar dados públicos de combustíveis numa experiência
+                simples,
+                rápida e útil. A página principal permite procurar por distrito, concelho, marca e tipo de combustível,
+                mas esta página existe para explicar o projeto, a origem dos dados e a política editorial por trás do
+                que
+                vês no ecrã.</p>
+        </header>
+
+        <section class="page-grid" aria-label="Informação sobre o projeto">
+            <article class="panel">
+                <h2>O que o PT Fuel faz</h2>
+                <p>O objetivo do site é permitir uma comparação prática entre postos de abastecimento em Portugal. Em
+                    vez de
+                    empurrar o utilizador para uma página vazia ou meramente promocional, o PT Fuel organiza a
+                    informação
+                    por localização e por combustível, com filtros que ajudam a reduzir rapidamente o ruído visual.</p>
+                <p>O site não vende combustível, não representa uma rede de postos e não substitui a confirmação do
+                    preço
+                    no local. Serve como ferramenta de consulta e comparação para apoiar decisões rápidas.</p>
+
+                <h2>Origem e tratamento dos dados</h2>
+                <p>Os preços e atributos dos postos são obtidos a partir de fontes públicas da DGEG. Quando a origem
+                    está
+                    disponível, o site atualiza a lista e volta a sincronizar os dados; quando a origem falha ou fica
+                    lenta,
+                    o cache local ajuda a manter a consulta funcional.</p>
+                <p>Esse modelo reduz tempos de carregamento e melhora a experiência móvel, sem recorrer a conteúdo
+                    automático sem revisão. A apresentação dos dados foi desenhada para ser direta, legível e fácil de
+                    usar
+                    em poucos segundos.</p>
+
+                <h2>Política editorial</h2>
+                <ul>
+                    <li>Prioridade a informação útil, original e verificável.</li>
+                    <li>Textos e explicações escritos para ajudar o utilizador a tomar uma decisão.</li>
+                    <li>Sem páginas vazias, sem ecrãs de transição inúteis e sem conteúdo copiado de outros sites.</li>
+                    <li>Publicidade apenas em páginas adequadas, nunca em páginas de erro, agradecimento ou login.</li>
+                </ul>
+
+                <h2>Como ler a página principal</h2>
+                <p>Primeiro escolhe um distrito no mapa, depois afina por concelho, combustível, marca ou pesquisa
+                    direta. A
+                    ordenação por preço ajuda a identificar rapidamente as opções mais competitivas. Para cada
+                    resultado, o
+                    site apresenta os dados essenciais e uma ligação útil para mapa.</p>
+
+                <div class="note">
+                    Se queres reaplicar ao AdSense com menos risco, esta página e a de contacto devem existir, ser úteis
+                    e
+                    estar ligadas no rodapé de todas as páginas principais.
+                </div>
+
+                <a class="back-link" href="index.html">← Voltar ao PT Fuel</a>
+            </article>
+
+            <aside class="stack">
+                <div class="stat-card">
+                    <span class="stat-label">Fundador</span>
+                    <p class="stat-value">Pedro Seixas</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Tipo de projeto</span>
+                    <p class="stat-value">Comparador informativo de preços de combustíveis</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Fontes</span>
+                    <p class="stat-value">Dados públicos da DGEG e navegação interna do site</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Estado recomendado</span>
+                    <p class="stat-value">Boa página institucional para confiança e contexto</p>
+                </div>
+            </aside>
+        </section>
+    </main>
+</body>
+
+</html>
